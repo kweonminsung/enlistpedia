@@ -1,7 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Main from "./components/Main/Main";
+import Header from "./components/Header/Header";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { ThemeContext } from "./context/ThemeContext";
+import { AppContainer } from "./App.styles";
 
 function App() {
-  return <div>Hello World</div>;
+  const [isDarkMode, setIsDarkMode] = useState<boolean | undefined>();
+
+  useEffect(() => {
+    const theme: string | null | undefined =
+      window.localStorage.getItem("theme");
+    if (theme === undefined) {
+      setIsDarkMode(true);
+    } else if (theme === "true") {
+      setIsDarkMode(true);
+    } else {
+      setIsDarkMode(false);
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    window.localStorage.setItem("theme", !isDarkMode ? "true" : "false");
+  };
+
+  return (
+    <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
+      <BrowserRouter>
+        <AppContainer isDarkMode={isDarkMode}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Main />}></Route>
+          </Routes>
+        </AppContainer>
+      </BrowserRouter>
+    </ThemeContext.Provider>
+  );
 }
 
 export default App;
