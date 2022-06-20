@@ -4,7 +4,7 @@ export const NavbarContainer = styled.nav`
   padding: 1.5rem;
   display: flex;
   justify-content: end;
-  gap: 0.2rem;
+  gap: 0.5rem;
 `;
 
 export const LoginButton = styled.button<{ isDarkMode: boolean | undefined }>`
@@ -12,10 +12,11 @@ export const LoginButton = styled.button<{ isDarkMode: boolean | undefined }>`
   height: 2rem;
   border-radius: 1rem;
   background-color: ${({ isDarkMode }) =>
-    isDarkMode === false ? "#7E8D6D" : "#ADCE8A"};
+    !isDarkMode ? "#7E8D6D" : "#ADCE8A"};
   font-size: 0.9rem;
-  color: ${({ isDarkMode }) => (isDarkMode === false ? "#FFFFFF" : "#3D3D3D")};
+  color: ${({ isDarkMode }) => (!isDarkMode ? "#FFFFFF" : "#3D3D3D")};
   cursor: pointer;
+  transition: all 0.25s linear;
 `;
 
 export const ToggleButton = styled.button<{
@@ -25,6 +26,12 @@ export const ToggleButton = styled.button<{
   height: 2rem;
   border-radius: 1rem;
   background-color: ${({ isDarkMode }) =>
-    isDarkMode === false ? "#FFFFFF" : "#3D3D3D"};
+    !isDarkMode ? "#FFFFFF" : "#3D3D3D"};
   cursor: pointer;
+  transition: all 0.25s linear;
+  transform: ${({ isDarkMode }) =>
+    !isDarkMode ? "rotate(0turn)" : "rotate(1turn)"};
+  &:active {
+    transform: rotate(0.5turn);
+  }
 `;

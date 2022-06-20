@@ -11,7 +11,7 @@
   font-family: "NanumSquare_ac";
   src: local("NanumSquare_ac"),
     url("../public/fonts/NanumSquare_ac/NanumSquare_acEB.ttf") format("ttf");
-  font-weight: 800;
+  font-weight: 700;
   font-style: normal;
   font-display: fallback;
 }
@@ -34,6 +34,7 @@ code {
 button {
   outline: 0;
   border: 0;
+  text-align: center;
 }
 
 h1,

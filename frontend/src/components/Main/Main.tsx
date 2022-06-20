@@ -1,21 +1,38 @@
+/* eslint-disable no-restricted-globals */
 import { useState, useContext } from "react";
 import { ThemeContext } from "../../context/ThemeContext";
+import { MainContainer } from "./Main.styles";
+import { SearchButton } from "./Main.styles";
 import SearchComponent from "./SearchComponent";
 import SiteInfo from "./SiteInfo";
+import Footer from "../Footer/Footer";
 
 export default function Main() {
   const { isDarkMode } = useContext(ThemeContext);
-  const [isSearching, setIsSearching] = useState(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const searchToggle = () => {
+    if (
+      isSearching &&
+      !confirm("창을 닫으면 결과가 사라집니다. 그래도 닫으시겠습니까?")
+    ) {
+      return;
+    }
     setIsSearching(!isSearching);
   };
 
   return (
-    <>
-      <button onClick={searchToggle}>찾아보기</button>
+    <MainContainer>
+      <SearchButton
+        onClick={searchToggle}
+        isDarkMode={isDarkMode}
+        isSearching={isSearching}
+      >
+        찾아보기
+      </SearchButton>
       {isSearching ? <SearchComponent /> : null}
       <SiteInfo />
-    </>
+      <Footer />
+    </MainContainer>
   );
 }

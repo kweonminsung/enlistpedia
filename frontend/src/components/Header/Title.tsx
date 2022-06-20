@@ -18,6 +18,7 @@ export default function Title() {
         background-size: cover;
         background-clip: text;
         color: transparent;
+        transition: all 0.25s linear;
       `}
     >
       <h2

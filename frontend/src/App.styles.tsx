@@ -4,5 +4,6 @@ export const AppContainer = styled.div<{
   isDarkMode: boolean | undefined;
 }>`
   background-color: ${({ isDarkMode }) =>
-    isDarkMode === false ? "#FFFFFF" : "#3D3D3D"}};
+    !isDarkMode ? "#FFFFFF" : "#3D3D3D"};
+  transition: all 0.25s linear;
 `;
