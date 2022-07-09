@@ -4,16 +4,16 @@ from sqlalchemy.orm import relationship
 
 
 class Military_Type(Base):
-    __tablename__ = 'types'
+    __tablename__ = 'type'
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(3))
     
 class Specialty(Base):
-    __tablename__ = 'specialties'
+    __tablename__ = 'specialty'
     
     id = Column(Integer, primary_key=True, index= True)
-    military_type_id = Column(Integer, ForeignKey('types.id'))
+    military_type_id = Column(Integer, ForeignKey('type.id'))
     
     name = Column(String(20))
     specialty_type = Column(String(10))
@@ -28,20 +28,20 @@ class Specialty(Base):
     
 
 class Recruit_result(Base):
-    __tablename__ = 'recruit_results'
+    __tablename__ = 'recruit_result'
     
-    specialty_id = Column(Integer, ForeignKey("specialties.id"), primary_key=True)
+    specialty_id = Column(Integer, ForeignKey("specialty.id"), primary_key=True)
     Column('enlist_date', Date)
     Column('min_score', Integer)    
     
 class Major(Base):
-    __tablename__ = 'majors'
+    __tablename__ = 'major'
     
     id = Column(Integer, primary_key=True, index= True)
     name = Column(String)
     
 class Certificate(Base):
-    __tablename__ = 'certificates'
+    __tablename__ = 'certificate'
     
     id = Column(Integer, primary_key=True, index= True)
     name = Column(String)
@@ -50,13 +50,13 @@ class Certificate(Base):
 
 
 specialty_major = Table('specialty_major', Base.metadata,
-    Column('specialty_id', ForeignKey('specialties.id'), primary_key = True)
-    Column('major_id', ForeignKey('majors.id'), primary_key = True)
+    Column('specialty_id', ForeignKey('specialty.id'), primary_key = True)
+    Column('major_id', ForeignKey('major.id'), primary_key = True)
     Column('is_direct', Boolean)
 )
 
 specialty_certificate = Table('specialty_certificate', Base.metadata,
-    Column('specialty_id', ForeignKey('specialties.id'), primary_key = True)
-    Column('certificate_id', ForeignKey('certificates.id'), primary_key = True)
+    Column('specialty_id', ForeignKey('specialty.id'), primary_key = True)
+    Column('certificate_id', ForeignKey('certificate.id'), primary_key = True)
     Column('is_direct', Boolean)
 )
