@@ -21,7 +21,7 @@ $ npm start
 
 ## 2-2. Backend
 
-- **가상환경 설정**
+### 가상환경 설정
 
 ```bash
 $ python -m venv venv
@@ -33,10 +33,16 @@ $ pip install --upgrade pip
 $ pip install -r requirements.txt
 ```
 
-- **서버 열기**
+### Start Development Server
 
 ```bash
 $ uvicorn main:app --reload --port 3001
+```
+
+### Start Production Server
+
+```bash
+$ export APP_ENV=production && uvicorn main:app --reload --port 3001
 ```
 
 ## Documentation
