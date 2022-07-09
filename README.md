@@ -25,7 +25,10 @@ $ npm start
 
 ```bash
 $ python -m venv venv
-$ . venv/Scripts/activate
+
+$ . venv/Scripts/activate (Windows)
+$ source venv/bin/activate (Ubuntu)
+
 $ pip install --upgrade pip
 $ pip install -r requirements.txt
 ```
