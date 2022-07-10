@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from db.database import get_db
 from db import db_major
 
 router = APIRouter(
@@ -7,5 +9,5 @@ router = APIRouter(
 )
 
 @router.get("/", summary="Get all major list")
-def get_majors():
-    return db_major.get_majors()
+def get_majors(search: str, db: Session = Depends(get_db)):
+    return db_major.db_get_majors(search, db)
