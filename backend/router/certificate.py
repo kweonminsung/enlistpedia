@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from db.database import get_db
 from db import db_certificate
 
 router = APIRouter(
@@ -7,5 +9,5 @@ router = APIRouter(
 )
 
 @router.get("/", summary="Get all certificate list")
-def get_certificates():
-    return db_certificate.db_get_certificates()
+def get_certificates(search: str, db : Session = Depends(get_db)):
+    return db_certificate.db_get_certificates(search, db)
