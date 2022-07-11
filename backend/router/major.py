@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from db.database import get_db
@@ -9,5 +10,5 @@ router = APIRouter(
 )
 
 @router.get("/", summary="Get all major list")
-def get_majors(search: str, db: Session = Depends(get_db)):
-    return db_major.db_get_majors(search, db)
+def get_majors(match: Optional[str], db: Session = Depends(get_db)):
+    return db_major.db_get_majors(db, match)
