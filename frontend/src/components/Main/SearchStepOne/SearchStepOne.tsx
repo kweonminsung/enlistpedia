@@ -104,7 +104,7 @@ export default function SearchStepOne({
       certificateList.forEach(function (
         recommend: Certificate,
         index: number,
-        array: Major[]
+        array: Certificate[]
       ) {
         const certificateRecommendElement: HTMLParagraphElement =
           document.createElement('p');

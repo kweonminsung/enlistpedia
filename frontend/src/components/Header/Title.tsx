@@ -1,6 +1,6 @@
-import { css } from "@emotion/css";
-import { useContext } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
+import { css } from '@emotion/css';
+import { useContext } from 'react';
+import { ThemeContext } from '../../context/ThemeContext';
 
 export default function Title() {
   const { isDarkMode } = useContext(ThemeContext);
@@ -12,9 +12,9 @@ export default function Title() {
         margin-top: 4rem;
         width: 15rem;
         text-align: center;
-        background-image: url("${!isDarkMode
-          ? "/images/patternLight.png"
-          : "/images/patternDark.png"}");
+        background-image: url('${!isDarkMode
+          ? '/images/patternLight.png'
+          : 'images/patternDark.png'}');
         background-size: cover;
         background-clip: text;
         color: transparent;

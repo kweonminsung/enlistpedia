@@ -9,6 +9,7 @@ import {
   PrevStageButton,
 } from './SearchComponent.styles';
 import SearchStepOne from './SearchStepOne/SearchStepOne';
+import { SearchStepTwo } from './SearchStepTwo/SearchStepTwo';
 
 export default function SearchComponent() {
   const TOTALSTAGES = 2;
@@ -16,10 +17,16 @@ export default function SearchComponent() {
   const { isDarkMode } = useContext(ThemeContext);
   const [searchStep, setSearchStep] = useState<number>(0);
 
+  // Step One
   const [selectedOrg, setSelectedOrg] = useState<number>(0);
   const [selectedMajor, setSelectedMajor] = useState<Major | null>(null);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
+
+  // Step Two
+  const [absentDays, setAbsentDays] = useState<number>();
+  const [bloodDontation, setBloodDonation] = useState<number>();
+  const [volunteerTime, setVolunteerTime] = useState<number>();
 
   const goToNextStep = () => {
     setSearchStep(searchStep + 1);
@@ -46,6 +53,8 @@ export default function SearchComponent() {
           selectedCert={selectedCert}
           setSelectedCert={setSelectedCert}
         />
+      ) : searchStep === 1 ? (
+        <SearchStepTwo></SearchStepTwo>
       ) : null}
 
       <BottomButtons>
