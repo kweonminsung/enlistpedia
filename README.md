@@ -33,16 +33,10 @@ $ pip install --upgrade pip
 $ pip install -r requirements.txt
 ```
 
-### Start Development Server
+### Start Server
 
 ```bash
 $ uvicorn main:app --reload --port 3001
-```
-
-### Start Production Server
-
-```bash
-$ export APP_ENV=production && uvicorn main:app --reload --port 3001
 ```
 
 ## Documentation
