@@ -3,10 +3,11 @@ import React, {
   HTMLAttributes,
   useContext,
   useEffect,
-  useState,
   useRef,
+  useState,
 } from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
+import { Major, Certificate } from '../../../typings/db';
 import {
   OrganizationText,
   SearchStepContainer,
@@ -16,28 +17,18 @@ import {
   RecommendContainer,
   RemoveAllTextBtn,
   GradeText,
-  CertificationInput,
+  CertificateInput,
 } from './SearchStepOne.styles';
-
-interface Major {
-  id: number;
-  name: string;
-}
-
-interface Certification {
-  id: number;
-  name: string;
-}
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   selectedOrg: number;
   setSelectedOrg: React.Dispatch<React.SetStateAction<number>>;
-  selectedMajor: number;
-  setSelectedMajor: React.Dispatch<React.SetStateAction<number>>;
+  selectedMajor: Major | null;
+  setSelectedMajor: React.Dispatch<React.SetStateAction<Major | null>>;
   selectedGrade: number;
   setSelectedGrade: React.Dispatch<React.SetStateAction<number>>;
-  selectedCert: number;
-  setSelectedCert: React.Dispatch<React.SetStateAction<number>>;
+  selectedCert: Certificate | null;
+  setSelectedCert: React.Dispatch<React.SetStateAction<Certificate | null>>;
 }
 
 export default function SearchStepOne({
@@ -52,79 +43,79 @@ export default function SearchStepOne({
 }: Props) {
   const { isDarkMode } = useContext(ThemeContext);
 
-  const [majorList, setMajorList] = useState<Major[]>([]);
-  const [majorName, setMajorName] = useState<string>('');
   const majorRecommendRef = useRef<HTMLDivElement>(null);
-
-  const [certificationList, setCertificationList] = useState<Major[]>([]);
-  const [certificationName, setCertificationName] = useState<string>('');
-  const certificationRecommendRef = useRef<HTMLDivElement>(null);
+  const certificateRecommendRef = useRef<HTMLDivElement>(null);
 
   const majorInputRef = useRef<HTMLInputElement>(null);
-  const certificationInputRef = useRef<HTMLInputElement>(null);
+  const certificateInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    async function getList() {
-      setMajorList(await (await axios.get('/majors')).data);
-      setCertificationList(await (await axios.get('/certifications')).data);
+    if (majorInputRef.current && selectedMajor) {
+      majorInputRef.current.value = selectedMajor.name;
     }
-    getList();
+    if (certificateInputRef.current && selectedCert) {
+      certificateInputRef.current.value = selectedCert.name;
+    }
   }, []);
 
-  const autoCompleteMajor = (e: React.ChangeEvent) => {
+  const autoCompleteMajor = async (e: React.ChangeEvent) => {
     if (majorRecommendRef.current) {
       const majorRecommendDiv = majorRecommendRef.current;
       const inputElement: HTMLInputElement = e.target as HTMLInputElement;
 
       majorRecommendDiv.innerHTML = '';
       if (inputElement.value === '') return;
-      majorList
-        .filter(
-          (major: Major) =>
-            major.name.match(`^.*${inputElement.value ?? ''}.*$`) !== null
-        )
-        .forEach(function (recommend: Major, index: number, array: Major[]) {
-          const majorRecommendElement: HTMLParagraphElement =
-            document.createElement('p');
-          majorRecommendElement.addEventListener('click', () => {
-            setMajorName(array[index].name);
-            inputElement.value = array[index].name;
-            majorRecommendDiv.innerHTML = '';
-          });
-          majorRecommendElement.innerText = `${recommend.name}`;
-          majorRecommendDiv.append(majorRecommendElement);
+
+      const majorList = await (
+        await axios.get(`/majors?match=${inputElement.value}`)
+      ).data;
+
+      majorList.forEach(function (
+        recommend: Major,
+        index: number,
+        array: Major[]
+      ) {
+        const majorRecommendElement: HTMLParagraphElement =
+          document.createElement('p');
+        majorRecommendElement.addEventListener('click', () => {
+          inputElement.value = array[index].name;
+          setSelectedMajor(array[index]);
+
+          majorRecommendDiv.innerHTML = '';
         });
+        majorRecommendElement.innerText = `${recommend.name}`;
+        majorRecommendDiv.append(majorRecommendElement);
+      });
     }
   };
 
-  const autoCompleteCertification = (e: React.ChangeEvent) => {
-    if (certificationRecommendRef.current) {
-      const certificationRecommendDiv = certificationRecommendRef.current;
+  const autoCompleteCertificate = async (e: React.ChangeEvent) => {
+    if (certificateRecommendRef.current) {
+      const certificateRecommendDiv = certificateRecommendRef.current;
       const inputElement: HTMLInputElement = e.target as HTMLInputElement;
 
-      certificationRecommendDiv.innerHTML = '';
+      certificateRecommendDiv.innerHTML = '';
       if (inputElement.value === '') return;
-      certificationList
-        .filter(
-          (certification: Certification) =>
-            certification.name.match(`^.*${inputElement.value ?? ''}.*$`) !==
-            null
-        )
-        .forEach(function (
-          recommend: Certification,
-          index: number,
-          array: Major[]
-        ) {
-          const certificationRecommendElement: HTMLParagraphElement =
-            document.createElement('p');
-          certificationRecommendElement.addEventListener('click', () => {
-            setMajorName(array[index].name);
-            inputElement.value = array[index].name;
-            certificationRecommendDiv.innerHTML = '';
-          });
-          certificationRecommendElement.innerText = `${recommend.name}`;
-          certificationRecommendDiv.append(certificationRecommendElement);
+
+      const certificateList = await (
+        await axios.get(`/certificates?match=${inputElement.value}`)
+      ).data;
+
+      certificateList.forEach(function (
+        recommend: Certificate,
+        index: number,
+        array: Major[]
+      ) {
+        const certificateRecommendElement: HTMLParagraphElement =
+          document.createElement('p');
+        certificateRecommendElement.addEventListener('click', () => {
+          inputElement.value = array[index].name;
+          setSelectedCert(array[index]);
+          certificateRecommendDiv.innerHTML = '';
         });
+        certificateRecommendElement.innerText = `${recommend.name}`;
+        certificateRecommendDiv.append(certificateRecommendElement);
+      });
     }
   };
 
@@ -132,13 +123,15 @@ export default function SearchStepOne({
     if (majorInputRef.current && majorRecommendRef.current) {
       majorInputRef.current.value = '';
       majorRecommendRef.current.innerHTML = '';
+      setSelectedMajor(null);
     }
   };
 
-  const removeAllTextCertification = () => {
-    if (certificationInputRef.current && certificationRecommendRef.current) {
-      certificationInputRef.current.value = '';
-      certificationRecommendRef.current.innerHTML = '';
+  const removeAllTextCertificate = () => {
+    if (certificateInputRef.current && certificateRecommendRef.current) {
+      certificateInputRef.current.value = '';
+      certificateRecommendRef.current.innerHTML = '';
+      setSelectedCert(null);
     }
   };
 
@@ -211,6 +204,8 @@ export default function SearchStepOne({
             }}
             grade={1}
             selectedGrade={selectedGrade}
+            selectedMajor={selectedMajor}
+            disabled={selectedMajor === null}
           >
             1학년
           </GradeText>
@@ -221,6 +216,8 @@ export default function SearchStepOne({
             }}
             grade={2}
             selectedGrade={selectedGrade}
+            selectedMajor={selectedMajor}
+            disabled={selectedMajor === null}
           >
             2학년
           </GradeText>
@@ -231,6 +228,8 @@ export default function SearchStepOne({
             }}
             grade={3}
             selectedGrade={selectedGrade}
+            selectedMajor={selectedMajor}
+            disabled={selectedMajor === null}
           >
             3학년
           </GradeText>
@@ -241,30 +240,32 @@ export default function SearchStepOne({
             }}
             grade={4}
             selectedGrade={selectedGrade}
+            selectedMajor={selectedMajor}
+            disabled={selectedMajor === null}
           >
             4학년+
           </GradeText>
         </GradeContainer>
       </MajorInput>
       <p>자격증 / 면허증을 입력해주십시오</p>
-      <CertificationInput isDarkMode={isDarkMode}>
+      <CertificateInput isDarkMode={isDarkMode}>
         <input
           type="text"
           placeholder="입력 / 해당 없음"
-          onChange={autoCompleteCertification}
-          ref={certificationInputRef}
+          onChange={autoCompleteCertificate}
+          ref={certificateInputRef}
         />
         <RemoveAllTextBtn
           isDarkMode={isDarkMode}
-          onClick={removeAllTextCertification}
+          onClick={removeAllTextCertificate}
         >
           ×
         </RemoveAllTextBtn>
         <RecommendContainer
           isDarkMode={isDarkMode}
-          ref={certificationRecommendRef}
+          ref={certificateRecommendRef}
         />
-      </CertificationInput>
+      </CertificateInput>
     </SearchStepContainer>
   );
 }

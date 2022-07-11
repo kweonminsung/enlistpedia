@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
+import { Certificate, Major } from '../../typings/db';
 import {
   SearchComponentContainer,
   SearchStageText,
@@ -10,16 +11,15 @@ import {
 import SearchStepOne from './SearchStepOne/SearchStepOne';
 
 export default function SearchComponent() {
-  const TOTALSTAGES = 4;
+  const TOTALSTAGES = 2;
 
   const { isDarkMode } = useContext(ThemeContext);
   const [searchStep, setSearchStep] = useState<number>(0);
 
-  // s
   const [selectedOrg, setSelectedOrg] = useState<number>(0);
-  const [selectedMajor, setSelectedMajor] = useState<number>(0);
+  const [selectedMajor, setSelectedMajor] = useState<Major | null>(null);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
-  const [selectedCert, setSelectedCert] = useState<number>(0);
+  const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
   const goToNextStep = () => {
     setSearchStep(searchStep + 1);

@@ -10,6 +10,6 @@ router = APIRouter(
     tags=["specialty"]
 )
 
-@router.post("/", summary="Get every applicable MOS info and score info", response_model=SpecialtyList)
+@router.post("", summary="Get every applicable MOS info and score info", response_model=SpecialtyList)
 def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
     return db_specialty.get_specialties(db, body)

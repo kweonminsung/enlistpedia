@@ -8,7 +8,7 @@ def db_get_certificates(db: Session, match: str):
     query = db.query(Certificate)
 
     if match:
-        query = query.filter("%{}%".format(match))
+        query = query.filter(Certificate.name.op('regexp')(f'^{match}.*$'))
 
     return query.all()
 

@@ -8,7 +8,7 @@ def db_get_majors(db: Session, match: str):
     query = db.query(Major)
 
     if match:
-        query = query.filter("%{}%".format(match))
+        query = query.filter(Major.name.op('regexp')(f'^{match}.*$'))
 
     return query.all()
 

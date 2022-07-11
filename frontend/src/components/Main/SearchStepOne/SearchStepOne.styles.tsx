@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Major } from '../../../typings/db';
 
 export const SearchStepContainer = styled.div<{
   isDarkMode: boolean | undefined;
@@ -71,15 +72,6 @@ export const MajorInput = styled(SearchStepInput)<{
   }
 `;
 
-export const GradeContainer = styled.div`
-  margin-top: 1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 1.5rem;
-`;
-
 export const RecommendContainer = styled.div<{
   isDarkMode: boolean | undefined;
 }>`
@@ -113,26 +105,38 @@ export const RemoveAllTextBtn = styled.button<{
   background-color: transparent;
 `;
 
+export const GradeContainer = styled.div`
+  margin-top: 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
+`;
+
 export const GradeText = styled.button<{
   isDarkMode: boolean | undefined;
   grade: number;
   selectedGrade: number;
+  selectedMajor: Major | null;
 }>`
   background-color: transparent;
   font-weight: 700;
   font-size: 1rem;
-  color: ${({ isDarkMode, grade, selectedGrade }) =>
-    grade === selectedGrade
-      ? !isDarkMode
-        ? '#7E8D6D'
-        : '#ADCE8A'
-      : !isDarkMode
-      ? '#000000'
-      : '#FFFFFF'};
+  color: ${({ isDarkMode, grade, selectedGrade, selectedMajor }) =>
+    selectedMajor
+      ? grade === selectedGrade
+        ? !isDarkMode
+          ? '#7E8D6D'
+          : '#ADCE8A'
+        : !isDarkMode
+        ? '#000000'
+        : '#FFFFFF'
+      : '#909090'};
   transition: all 0.125s linear;
 `;
 
-export const CertificationInput = styled(SearchStepInput)<{
+export const CertificateInput = styled(SearchStepInput)<{
   isDarkMode: boolean | undefined;
 }>`
   input {

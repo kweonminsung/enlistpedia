@@ -9,6 +9,6 @@ router = APIRouter(
     tags=["major"]
 )
 
-@router.get("/", summary="Get all major list")
-def get_majors(match: Optional[str], db: Session = Depends(get_db)):
+@router.get("", summary="Get all major list")
+def get_majors(match: Optional[str] = None, db: Session = Depends(get_db)):
     return db_major.db_get_majors(db, match)

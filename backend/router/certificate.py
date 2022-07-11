@@ -9,6 +9,6 @@ router = APIRouter(
     tags=["certificate"]
 )
 
-@router.get("/", summary="Get all certificate list")
-def get_certificates(match: Optional[str], db : Session = Depends(get_db)):
+@router.get("", summary="Get all certificate list")
+def get_certificates(match: Optional[str] = None, db : Session = Depends(get_db)):
     return db_certificate.db_get_certificates(db, match)
