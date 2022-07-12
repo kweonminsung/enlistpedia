@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const SearchComponentContainer = styled.div<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   position: relative;
   display: flex;
@@ -15,7 +15,7 @@ export const SearchComponentContainer = styled.div<{
 `;
 
 export const SearchStageText = styled.div<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   border-radius: 0 0 0.8rem 0.8rem;
   padding: 0.6rem 0;
@@ -35,7 +35,7 @@ export const BottomButtons = styled.div`
 `;
 
 export const PrevStageButton = styled.button<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   padding: 0.6rem 0;
   width: 6.2rem;
@@ -46,7 +46,7 @@ export const PrevStageButton = styled.button<{
 `;
 
 export const NextStageButton = styled.button<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   padding: 0.6rem 0;
   width: 6.2rem;

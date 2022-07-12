@@ -13,7 +13,7 @@ export const IconImage = styled.div<{
 `;
 
 export const TempContainer = styled.div<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   margin: 4rem 0 15rem 0;
   border-radius: 1rem;
@@ -24,7 +24,7 @@ export const TempContainer = styled.div<{
 `;
 
 export const SiteInfoBottomContainer = styled.div<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   display: flex;
   flex-direction: column;

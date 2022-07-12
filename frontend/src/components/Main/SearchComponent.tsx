@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
-import { Certificate, Major } from '../../typings/db';
+import { Certificate, Major } from '../../typings/typings';
 import {
   SearchComponentContainer,
   SearchStageText,
@@ -9,6 +9,7 @@ import {
   PrevStageButton,
 } from './SearchComponent.styles';
 import SearchStepOne from './SearchStepOne/SearchStepOne';
+import { ExtraPoint } from './SearchStepTwo/ExtraOption';
 import { SearchStepTwo } from './SearchStepTwo/SearchStepTwo';
 
 export default function SearchComponent() {
@@ -27,6 +28,7 @@ export default function SearchComponent() {
   const [absentDays, setAbsentDays] = useState<number>();
   const [bloodDontation, setBloodDonation] = useState<number>();
   const [volunteerTime, setVolunteerTime] = useState<number>();
+  const [extraPoint, setExtraPoint] = useState<ExtraPoint[]>([]);
 
   const goToNextStep = () => {
     setSearchStep(searchStep + 1);
@@ -54,7 +56,11 @@ export default function SearchComponent() {
           setSelectedCert={setSelectedCert}
         />
       ) : searchStep === 1 ? (
-        <SearchStepTwo></SearchStepTwo>
+        <SearchStepTwo
+          selectedOrg={selectedOrg}
+          extraPoint={extraPoint}
+          setExtraPoint={setExtraPoint}
+        ></SearchStepTwo>
       ) : null}
 
       <BottomButtons>

@@ -11,8 +11,8 @@ export const MainContainer = styled.div`
 `;
 
 export const SearchButton = styled.button<{
-  isDarkMode: boolean | undefined;
-  isSearching: boolean | undefined;
+  isDarkMode: boolean;
+  isSearching: boolean;
 }>`
   border-radius: 0.8rem 0.8rem 0 0;
   padding: 0.6rem 0;

@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { SearchStepInput } from '../SearchStepOne/SearchStepOne.styles';
 
 export const EtcInput = styled(SearchStepInput)<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   display: grid;
   grid-template-columns: 8rem 4.5rem;
@@ -19,16 +19,16 @@ export const EtcInput = styled(SearchStepInput)<{
     background-color: transparent;
     color: ${({ isDarkMode }) => (!isDarkMode ? '#000000' : '#FFFFFF')};
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 `;
 
 export const ExtraInput = styled(SearchStepInput)<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
-  padding: 0;
+  padding: 1rem 0 0 0;
   overflow: hidden;
   > button {
     width: 100%;
@@ -41,8 +41,32 @@ export const ExtraInput = styled(SearchStepInput)<{
   }
 `;
 
-export const ExtraInputMain = styled.div`
-  height: 10rem;
+export const ExtraInputMain = styled.div<{
+  isDarkMode: boolean;
+}>`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+  width: 80%;
+  select {
+    background-color: transparent;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 1rem;
+    option {
+      padding: 0.5rem;
+    }
+  }
+  select:first-of-type {
+    border-radius: 0.5rem;
+    background-color: ${({ isDarkMode }) =>
+      !isDarkMode ? '#F0F0F0' : '#707070'};
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#000000' : '#FFFFFF')};
+  }
+  select:nth-of-type(2) {
+    background-color: ${({ isDarkMode }) =>
+      !isDarkMode ? '#FFFFFF' : '#3D3D3D'};
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#3D3D3D' : '#FFFFFF')};
+  }
 `;
-
-export const ExtraInputOption = styled.div``;

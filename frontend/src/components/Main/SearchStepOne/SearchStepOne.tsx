@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
-import { Major, Certificate } from '../../../typings/db';
+import { Major, Certificate } from '../../../typings/typings';
 import {
   OrganizationText,
   SearchStepContainer,

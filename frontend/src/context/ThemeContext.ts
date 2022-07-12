@@ -1,11 +1,11 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 interface IThemeContext {
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
   toggleDarkMode(): void;
 }
 
 export const ThemeContext = createContext<IThemeContext>({
-  isDarkMode: undefined,
+  isDarkMode: false,
   toggleDarkMode: () => {},
 });

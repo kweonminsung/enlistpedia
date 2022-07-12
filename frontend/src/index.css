@@ -43,6 +43,11 @@ input {
   outline: 0;
 }
 
+select {
+  outline: none;
+  border: 0;
+}
+
 h1,
 h2,
 h3,

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Major } from '../../../typings/db';
+import { Major } from '../../../typings/typings';
 
 export const SearchStepContainer = styled.div<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   width: 90%;
   text-align: center;
@@ -13,7 +13,7 @@ export const SearchStepContainer = styled.div<{
   }
 `;
 
-export const SearchStepInput = styled.div<{ isDarkMode: boolean | undefined }>`
+export const SearchStepInput = styled.div<{ isDarkMode: boolean }>`
   margin-top: 1.2rem;
   padding: 1.5rem 0;
   border-radius: 1rem;
@@ -24,7 +24,7 @@ export const SearchStepInput = styled.div<{ isDarkMode: boolean | undefined }>`
 `;
 
 export const SelectOrganization = styled(SearchStepInput)<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   display: flex;
   flex-direction: row;
@@ -32,7 +32,7 @@ export const SelectOrganization = styled(SearchStepInput)<{
 `;
 
 export const OrganizationText = styled.button<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
   orgNumber: number;
   selectedOrg: number;
 }>`
@@ -55,7 +55,7 @@ export const OrganizationText = styled.button<{
 `;
 
 export const MajorInput = styled(SearchStepInput)<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   input {
     position: relative;
@@ -73,7 +73,7 @@ export const MajorInput = styled(SearchStepInput)<{
 `;
 
 export const RecommendContainer = styled.div<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   position: absolute;
   left: calc(50% - 8.5rem);
@@ -94,7 +94,7 @@ export const RecommendContainer = styled.div<{
 `;
 
 export const RemoveAllTextBtn = styled.button<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   position: relative;
   top: 1px;
@@ -115,7 +115,7 @@ export const GradeContainer = styled.div`
 `;
 
 export const GradeText = styled.button<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
   grade: number;
   selectedGrade: number;
   selectedMajor: Major | null;
@@ -137,7 +137,7 @@ export const GradeText = styled.button<{
 `;
 
 export const CertificateInput = styled(SearchStepInput)<{
-  isDarkMode: boolean | undefined;
+  isDarkMode: boolean;
 }>`
   input {
     position: relative;

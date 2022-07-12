@@ -11,7 +11,7 @@ axios.defaults.baseURL = SERVER_URL;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState<boolean | undefined>();
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
     const theme: string | null | undefined =
