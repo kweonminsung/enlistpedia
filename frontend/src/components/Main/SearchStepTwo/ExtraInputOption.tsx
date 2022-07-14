@@ -14,8 +14,8 @@ export function ExtraInputOption({ selectedOption, setSelectedPoint }: Props) {
   return (
     <select onChange={changePoint}>
       {selectedOption.score_list.map(
-        (element: { option: string; score: number }, index: number) => (
-          <option value={element.score}>{element.option}</option>
+        (element: { index: number; option: string }, index: number) => (
+          <option value={element.index}>{element.option}</option>
         )
       )}
     </select>

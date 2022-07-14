@@ -25,7 +25,7 @@ export function SearchStepTwo({
     EXTRAOPTIONBYORG[selectedOrg][0]
   );
   const [selectedPoint, setSelectedPoint] = useState<number>(
-    selectedOption.score_list[0].score
+    selectedOption.score_list[0].index
   );
 
   const extraSelectChanged = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -33,23 +33,12 @@ export function SearchStepTwo({
   };
 
   const addExtraPoint = () => {
-    if (typeof selectedOption.specialty_id == 'number') {
-      extraPoint.push({
-        specialty_id: selectedOption.specialty_id,
-        description: selectedOption.description,
-        score: selectedPoint,
-      });
-      setExtraPoint(extraPoint);
-    } else {
-      (selectedOption.specialty_id as number[]).forEach((id: number) => {
-        extraPoint.push({
-          specialty_id: id,
-          description: selectedOption.description,
-          score: selectedPoint,
-        });
-        setExtraPoint(extraPoint);
-      });
-    }
+    extraPoint.push({
+      option_index: selectedOption.index,
+      score_index: selectedPoint,
+    });
+    setExtraPoint(extraPoint);
+
     console.log(extraPoint);
   };
 
@@ -88,6 +77,7 @@ export function SearchStepTwo({
 
       <SelectedPointContainer
         isDarkMode={isDarkMode}
+        selectedOrg={selectedOrg}
         extraPoint={extraPoint}
       ></SelectedPointContainer>
 

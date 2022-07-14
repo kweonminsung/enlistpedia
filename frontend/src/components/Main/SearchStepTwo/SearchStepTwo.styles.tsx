@@ -32,7 +32,7 @@ export const ExtraInput = styled(SearchStepInput)<{
   overflow: hidden;
   > button {
     width: 100%;
-    margin: 1rem 0 0 0;
+    margin: 0.8rem 0 0 0;
     padding: 0.5rem;
     background-color: ${({ isDarkMode }) =>
       !isDarkMode ? '#7E8D6D' : '#ADCE8A'};
@@ -46,14 +46,14 @@ export const ExtraInputMain = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
   margin: 0 auto;
   width: 80%;
   select {
-    background-color: transparent;
     padding: 0.5rem;
     text-align: center;
     font-size: 1rem;
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#3D3D3D' : '#FFFFFF')};
     option {
       padding: 0.5rem;
     }
@@ -62,11 +62,9 @@ export const ExtraInputMain = styled.div<{
     border-radius: 0.5rem;
     background-color: ${({ isDarkMode }) =>
       !isDarkMode ? '#F0F0F0' : '#707070'};
-    color: ${({ isDarkMode }) => (!isDarkMode ? '#000000' : '#FFFFFF')};
   }
   select:nth-of-type(2) {
     background-color: ${({ isDarkMode }) =>
       !isDarkMode ? '#FFFFFF' : '#3D3D3D'};
-    color: ${({ isDarkMode }) => (!isDarkMode ? '#3D3D3D' : '#FFFFFF')};
   }
 `;
