@@ -8,8 +8,7 @@ const SelectedPoint = styled(ExtraInput)<{
   width: 80%;
   margin: 1rem auto;
   > button {
-    background-color: ${({ isDarkMode }) =>
-      !isDarkMode ? '#ff0000' : '#ff0000'};
+    background-color: #f98b8b;
   }
 `;
 
