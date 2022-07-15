@@ -3,16 +3,42 @@ import {
   IconImage,
   SiteInfoBottomContainer,
   TempContainer,
+  CounterConatiner,
 } from './Siteinfo.styles';
 import { ThemeContext } from '../../../context/ThemeContext';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
+import useOnScreen from '../hooks/useOnScreen';
+import CountUp from 'react-countup';
 
 export default function SiteInfo() {
   const { isDarkMode } = useContext(ThemeContext);
 
+  const explainRef: any = useRef<HTMLDivElement>();
+  const onExplain: boolean = useOnScreen<HTMLDivElement>(explainRef, '-50px');
+
+  // useEffect(() => {
+
+  // }, [])
+
   return (
     <>
       <TempContainer isDarkMode={isDarkMode}></TempContainer>
+
+      <CounterConatiner isDarkMode={isDarkMode} ref={explainRef}>
+        <div>
+          <p>{onExplain && <CountUp end={100} duration={0.75} prefix="+" />}</p>
+          <p>총 검색 횟수</p>
+        </div>
+        <div>
+          <p>{onExplain && <CountUp end={287} duration={0.75} />}</p>
+          <p>검색 가능 특기 수</p>
+        </div>
+        <div>
+          <p>{onExplain && <CountUp end={1259} duration={0.75} />}</p>
+          <p>이전 회차 결과</p>
+        </div>
+      </CounterConatiner>
+
       <SiteInfoBottomContainer isDarkMode={isDarkMode}>
         <p>Developed with</p>
         <IconContainer>

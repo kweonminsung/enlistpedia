@@ -23,6 +23,29 @@ export const TempContainer = styled.div<{
     !isDarkMode ? '#F0F0F0' : '#7A7A7A'};
 `;
 
+export const CounterConatiner = styled.div<{
+  isDarkMode: boolean;
+}>`
+  display: flex;
+  gap: 5rem;
+  margin: 5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: ${({ isDarkMode }) => (!isDarkMode ? '#000000' : '#FFFFFF')};
+  p {
+    margin: 1rem 0;
+  }
+  p: first-of-type {
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
+`;
+
 export const SiteInfoBottomContainer = styled.div<{
   isDarkMode: boolean;
 }>`
