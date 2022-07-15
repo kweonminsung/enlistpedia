@@ -38,9 +38,9 @@ export default function SearchComponent() {
 
   const goToNextStep = () => {
     if (searchStep + 1 === TOTALSTAGES) {
+      getResult();
     }
     setSearchStep(searchStep + 1);
-    getResult();
   };
 
   const goToPrevStep = () => {
