@@ -139,7 +139,11 @@ export const GradeText = styled.button<{
 export const CertificateInput = styled(SearchStepInput)<{
   isDarkMode: boolean;
 }>`
-  input {
+  width: 90%;
+  margin: 0 auto;
+  padding: 1rem 0 0 0;
+  overflow: hidden;
+  > input {
     position: relative;
     left: 0.5rem;
     width: 15rem;
@@ -151,5 +155,14 @@ export const CertificateInput = styled(SearchStepInput)<{
     font-size: 1rem;
     color: ${({ isDarkMode }) => (!isDarkMode ? '#909090' : '#A0A0A0')};
     caret-color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
+  }
+  > button:nth-of-type(2) {
+    width: 100%;
+    margin: 0.8rem 0 0 0;
+    padding: 0.5rem;
+    background-color: ${({ isDarkMode }) =>
+      !isDarkMode ? '#7E8D6D' : '#ADCE8A'};
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#FFFFFF' : '#3D3D3D')};
+    font-size: 1rem;
   }
 `;

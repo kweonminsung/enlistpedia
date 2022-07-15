@@ -10,7 +10,7 @@ export const EtcInput = styled(SearchStepInput)<{
   align-items: center;
   justify-content: center;
   text-align: left;
-  input {
+  > input {
     border: 0;
     border-bottom: 1px solid
       ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
@@ -49,7 +49,7 @@ export const ExtraInputMain = styled.div<{
   gap: 0.5rem;
   margin: 0 auto;
   width: 80%;
-  select {
+  > select {
     padding: 0.5rem;
     text-align: center;
     font-size: 1rem;
@@ -58,12 +58,12 @@ export const ExtraInputMain = styled.div<{
       padding: 0.5rem;
     }
   }
-  select:first-of-type {
+  > select:first-of-type {
     border-radius: 0.5rem;
     background-color: ${({ isDarkMode }) =>
       !isDarkMode ? '#F0F0F0' : '#707070'};
   }
-  select:nth-of-type(2) {
+  > select:nth-of-type(2) {
     background-color: ${({ isDarkMode }) =>
       !isDarkMode ? '#FFFFFF' : '#3D3D3D'};
   }

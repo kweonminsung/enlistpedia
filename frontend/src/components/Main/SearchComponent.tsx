@@ -1,6 +1,12 @@
+import axios from 'axios';
 import { useState, useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
-import { Certificate, Major } from '../../typings/typings';
+import {
+  Certificate,
+  Major,
+  Specialty,
+  SpecialtyRequest,
+} from '../../typings/typings';
 import {
   SearchComponentContainer,
   SearchStageText,
@@ -9,7 +15,7 @@ import {
   PrevStageButton,
 } from './SearchComponent.styles';
 import SearchStepOne from './SearchStepOne/SearchStepOne';
-import { ExtraPoint } from './SearchStepTwo/ExtraOption';
+import { EXTRAOPTIONBYORG, ExtraPoint } from './SearchStepTwo/ExtraOption';
 import { SearchStepTwo } from './SearchStepTwo/SearchStepTwo';
 
 export default function SearchComponent() {
@@ -22,7 +28,7 @@ export default function SearchComponent() {
   const [selectedOrg, setSelectedOrg] = useState<number>(0);
   const [selectedMajor, setSelectedMajor] = useState<Major | null>(null);
   const [selectedGrade, setSelectedGrade] = useState<number>(1);
-  const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
+  const [selectedCert, setSelectedCert] = useState<Certificate[]>([]);
 
   // Step Two
   const [absentDays, setAbsentDays] = useState<number>(0);
@@ -31,11 +37,56 @@ export default function SearchComponent() {
   const [extraPoint, setExtraPoint] = useState<ExtraPoint[]>([]);
 
   const goToNextStep = () => {
+    if (searchStep + 1 === TOTALSTAGES) {
+    }
     setSearchStep(searchStep + 1);
+    getResult();
   };
 
   const goToPrevStep = () => {
     setSearchStep(searchStep - 1);
+  };
+
+  const getResult = async () => {
+    const parsedExtraPoint: {
+      specialty_id: number;
+      description: string;
+      score: number;
+    }[] = [];
+    for (let extra of extraPoint) {
+      const tempOption = EXTRAOPTIONBYORG[selectedOrg][extra.option_index];
+      if (typeof tempOption.specialty_id === 'number') {
+        parsedExtraPoint.push({
+          specialty_id: tempOption.specialty_id as number,
+          description: tempOption.description,
+          score: tempOption.score_list[extra.score_index].score,
+        });
+      } else {
+        for (let id of tempOption.specialty_id) {
+          parsedExtraPoint.push({
+            specialty_id: id,
+            description: tempOption.description,
+            score: tempOption.score_list[extra.score_index].score,
+          });
+        }
+      }
+    }
+
+    const data: SpecialtyRequest = {
+      military_type: [selectedOrg],
+      major_id: selectedMajor ? selectedMajor.id : null,
+      grade: selectedGrade,
+      certificates_id: selectedCert.map(
+        (certificate: Certificate) => certificate.id
+      ),
+      absent_days: absentDays,
+      blood_donation: bloodDontation,
+      volunteer_time: volunteerTime,
+      extra_points: parsedExtraPoint,
+    };
+
+    const result: Specialty[] = await axios.post('/specialties', data);
+    console.log(result);
   };
 
   return (

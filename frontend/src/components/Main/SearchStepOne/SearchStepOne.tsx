@@ -1,5 +1,12 @@
 import axios from 'axios';
-import React, { HTMLAttributes, useContext, useEffect, useRef } from 'react';
+import React, {
+  HTMLAttributes,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
 import { Major, Certificate } from '../../../typings/typings';
 import { ExtraPoint } from '../SearchStepTwo/ExtraOption';
@@ -14,6 +21,7 @@ import {
   GradeText,
   CertificateInput,
 } from './SearchStepOne.styles';
+import { SelectedCertificateContainer } from './SelectedCertificateContainer';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   selectedOrg: number;
@@ -22,8 +30,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   setSelectedMajor: React.Dispatch<React.SetStateAction<Major | null>>;
   selectedGrade: number;
   setSelectedGrade: React.Dispatch<React.SetStateAction<number>>;
-  selectedCert: Certificate | null;
-  setSelectedCert: React.Dispatch<React.SetStateAction<Certificate | null>>;
+  selectedCert: Certificate[];
+  setSelectedCert: React.Dispatch<React.SetStateAction<Certificate[]>>;
   extraPoint: ExtraPoint[];
   setExtraPoint: React.Dispatch<React.SetStateAction<ExtraPoint[]>>;
 }
@@ -48,12 +56,15 @@ export default function SearchStepOne({
   const majorInputRef = useRef<HTMLInputElement>(null);
   const certificateInputRef = useRef<HTMLInputElement>(null);
 
+  // 선택한 자격증을 임시 저장
+  const [tempCert, setTempCert] = useState<Certificate | null>(null);
+
+  // 강제 리렌더링
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
   useEffect(() => {
     if (majorInputRef.current && selectedMajor) {
       majorInputRef.current.value = selectedMajor.name;
-    }
-    if (certificateInputRef.current && selectedCert) {
-      certificateInputRef.current.value = selectedCert.name;
     }
   }, []);
 
@@ -126,7 +137,7 @@ export default function SearchStepOne({
           document.createElement('p');
         certificateRecommendElement.addEventListener('click', () => {
           inputElement.value = array[index].name;
-          setSelectedCert(array[index]);
+          setTempCert(array[index]);
           certificateRecommendDiv.innerHTML = '';
         });
         certificateRecommendElement.innerText = `${recommend.name}`;
@@ -149,7 +160,29 @@ export default function SearchStepOne({
     if (certificateInputRef.current && certificateRecommendRef.current) {
       certificateInputRef.current.value = '';
       certificateRecommendRef.current.innerHTML = '';
-      setSelectedCert(null);
+      setTempCert(null);
+    }
+  };
+
+  // 입력한 자격증을 배열에 넣는 함수
+  const addCertificate = () => {
+    if (tempCert) {
+      if (
+        selectedCert.find((element: Certificate) => element.id === tempCert.id)
+      ) {
+        alert('같은 자격증을 여러 번 입력할 수 없습니다');
+        return;
+      }
+
+      selectedCert.push({
+        id: tempCert.id,
+        name: tempCert.name,
+      });
+      setSelectedCert(selectedCert);
+      removeAllTextCertificate();
+      forceUpdate();
+    } else {
+      alert('자격증을 선택해주세요.');
     }
   };
 
@@ -266,6 +299,13 @@ export default function SearchStepOne({
         </GradeContainer>
       </MajorInput>
       <p>자격증 / 면허증을 입력해주십시오</p>
+
+      <SelectedCertificateContainer
+        isDarkMode={isDarkMode}
+        selectedCert={selectedCert}
+        setSelectedCert={setSelectedCert}
+      ></SelectedCertificateContainer>
+
       <CertificateInput isDarkMode={isDarkMode}>
         <input
           type="text"
@@ -283,6 +323,7 @@ export default function SearchStepOne({
           isDarkMode={isDarkMode}
           ref={certificateRecommendRef}
         />
+        <button onClick={addCertificate}>추가</button>
       </CertificateInput>
     </SearchStepContainer>
   );

@@ -44,8 +44,8 @@ export function SearchStepTwo({
   const [selectedPoint, setSelectedPoint] = useState<number>(
     selectedOption.score_list[0].index
   );
-  // 입력한 추가 정보를 넣는 배열
-  const [addedNumber, setAddedNumber] = useState<number>(0);
+
+  const [extraIndex, setExtraIndex] = useState<number>(0);
 
   useEffect(() => {
     if (absentDaysInputRef.current && absentDays) {
@@ -105,20 +105,27 @@ export function SearchStepTwo({
 
   // 입력한 추가 정보를 배열에 넣는 함수
   const addExtraPoint = () => {
+    if (
+      extraPoint.find(
+        (element: ExtraPoint) => element.option_index === selectedOption.index
+      )
+    ) {
+      alert('같은 유형의 추가 정보를 여러 번 입력할 수 없습니다');
+      return;
+    }
     extraPoint.push({
-      index: addedNumber,
+      index: extraIndex,
       option_index: selectedOption.index,
       score_index: selectedPoint,
     });
     setExtraPoint(extraPoint);
-    setAddedNumber(addedNumber + 1);
+    setExtraIndex(extraIndex + 1);
   };
 
   useEffect(() => {
     if (extraSelectRef.current) {
       const extraSelectDiv = extraSelectRef.current as HTMLSelectElement;
 
-      console.log(EXTRAOPTIONBYORG[selectedOrg]);
       extraSelectDiv.innerHTML = '';
       EXTRAOPTIONBYORG[selectedOrg].forEach(
         (option: ExtraOption, index: number) => {

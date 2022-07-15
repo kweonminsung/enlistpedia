@@ -45,7 +45,7 @@ export function SelectedPointContainer({
   // 해당 추가 정보 입력을 배열에서 없애주는 함수
   const toggleDelete = (index: number) => {
     extraPoint.splice(
-      extraPoint.findIndex(element => element.index === index),
+      extraPoint.findIndex((element: ExtraPoint) => element.index === index),
       1
     );
     setExtraPoint(extraPoint);
@@ -54,7 +54,7 @@ export function SelectedPointContainer({
 
   return (
     <>
-      {extraPoint.map(element => (
+      {extraPoint.map((element: ExtraPoint) => (
         <SelectedPoint isDarkMode={isDarkMode}>
           <p>
             {EXTRAOPTIONBYORG[selectedOrg][element.option_index].description}
