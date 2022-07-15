@@ -1,8 +1,11 @@
+// 입력한 추가 정보의 저장
 export interface ExtraPoint {
+  index: number;
   option_index: number;
   score_index: number;
 }
 
+// 추가 정보의 유형과 점수별 항목
 export interface ExtraOption {
   index: number;
   specialty_id: number | number[];
@@ -14,6 +17,7 @@ export interface ExtraOption {
   }[];
 }
 
+// 편제별 추가 정보 유형의 목록
 export const EXTRAOPTIONBYORG: ExtraOption[][] = [
   [
     {

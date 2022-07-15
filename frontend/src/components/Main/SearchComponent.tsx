@@ -25,9 +25,9 @@ export default function SearchComponent() {
   const [selectedCert, setSelectedCert] = useState<Certificate | null>(null);
 
   // Step Two
-  const [absentDays, setAbsentDays] = useState<number>();
-  const [bloodDontation, setBloodDonation] = useState<number>();
-  const [volunteerTime, setVolunteerTime] = useState<number>();
+  const [absentDays, setAbsentDays] = useState<number>(0);
+  const [bloodDontation, setBloodDonation] = useState<number>(0);
+  const [volunteerTime, setVolunteerTime] = useState<number>(0);
   const [extraPoint, setExtraPoint] = useState<ExtraPoint[]>([]);
 
   const goToNextStep = () => {
@@ -54,10 +54,18 @@ export default function SearchComponent() {
           setSelectedGrade={setSelectedGrade}
           selectedCert={selectedCert}
           setSelectedCert={setSelectedCert}
+          extraPoint={extraPoint}
+          setExtraPoint={setExtraPoint}
         />
       ) : searchStep === 1 ? (
         <SearchStepTwo
           selectedOrg={selectedOrg}
+          absentDays={absentDays}
+          setAbsentDays={setAbsentDays}
+          bloodDontation={bloodDontation}
+          setBloodDonation={setBloodDonation}
+          volunteerTime={volunteerTime}
+          setVolunteerTime={setVolunteerTime}
           extraPoint={extraPoint}
           setExtraPoint={setExtraPoint}
         ></SearchStepTwo>

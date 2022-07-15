@@ -1,6 +1,7 @@
 import { EXTRAOPTIONBYORG, ExtraPoint } from './ExtraOption';
 import styled from '@emotion/styled';
 import { ExtraInput } from './SearchStepTwo.styles';
+import { useReducer } from 'react';
 
 const SelectedPoint = styled(ExtraInput)<{
   isDarkMode: boolean;
@@ -29,13 +30,28 @@ interface Props {
   isDarkMode: boolean;
   selectedOrg: number;
   extraPoint: ExtraPoint[];
+  setExtraPoint: React.Dispatch<React.SetStateAction<ExtraPoint[]>>;
 }
 
 export function SelectedPointContainer({
   isDarkMode,
   selectedOrg,
   extraPoint,
+  setExtraPoint,
 }: Props) {
+  // 강제 리렌더링
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+  // 해당 추가 정보 입력을 배열에서 없애주는 함수
+  const toggleDelete = (index: number) => {
+    extraPoint.splice(
+      extraPoint.findIndex(element => element.index === index),
+      1
+    );
+    setExtraPoint(extraPoint);
+    forceUpdate();
+  };
+
   return (
     <>
       {extraPoint.map(element => (
@@ -50,7 +66,13 @@ export function SelectedPointContainer({
               ].option
             }
           </p>
-          <button>삭제</button>
+          <button
+            onClick={() => {
+              toggleDelete(element.index);
+            }}
+          >
+            삭제
+          </button>
         </SelectedPoint>
       ))}
     </>

@@ -1,13 +1,8 @@
 import axios from 'axios';
-import React, {
-  HTMLAttributes,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { HTMLAttributes, useContext, useEffect, useRef } from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
 import { Major, Certificate } from '../../../typings/typings';
+import { ExtraPoint } from '../SearchStepTwo/ExtraOption';
 import {
   OrganizationText,
   SearchStepContainer,
@@ -29,6 +24,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   setSelectedGrade: React.Dispatch<React.SetStateAction<number>>;
   selectedCert: Certificate | null;
   setSelectedCert: React.Dispatch<React.SetStateAction<Certificate | null>>;
+  extraPoint: ExtraPoint[];
+  setExtraPoint: React.Dispatch<React.SetStateAction<ExtraPoint[]>>;
 }
 
 export default function SearchStepOne({
@@ -40,6 +37,8 @@ export default function SearchStepOne({
   setSelectedGrade,
   selectedCert,
   setSelectedCert,
+  extraPoint,
+  setExtraPoint,
 }: Props) {
   const { isDarkMode } = useContext(ThemeContext);
 
@@ -58,6 +57,22 @@ export default function SearchStepOne({
     }
   }, []);
 
+  // 편제를 변경하는 함수(추가 정보를 입력한 이력이 있으면 삭제 여부를 물어봄)
+  const toggleOrg = (orgNumber: number) => {
+    if (extraPoint.length !== 0) {
+      if (
+        !window.confirm(
+          '추가 정보 입력 기록이 있습니다. 편제를 바꾸면 입력한 추가 정보가 사라집니다. 계속하시겠습니까?'
+        )
+      ) {
+        return;
+      }
+      setExtraPoint([]);
+    }
+    setSelectedOrg(orgNumber);
+  };
+
+  // 전공 자동 완성 관련 로직
   const autoCompleteMajor = async (e: React.ChangeEvent) => {
     if (majorRecommendRef.current) {
       const majorRecommendDiv = majorRecommendRef.current;
@@ -89,6 +104,7 @@ export default function SearchStepOne({
     }
   };
 
+  // 자격증 자동 완성 관련 로직
   const autoCompleteCertificate = async (e: React.ChangeEvent) => {
     if (certificateRecommendRef.current) {
       const certificateRecommendDiv = certificateRecommendRef.current;
@@ -119,6 +135,7 @@ export default function SearchStepOne({
     }
   };
 
+  // 입력한 전공과 입력 추천 목록을 없애는 함수
   const removeAllTextMajor = () => {
     if (majorInputRef.current && majorRecommendRef.current) {
       majorInputRef.current.value = '';
@@ -127,6 +144,7 @@ export default function SearchStepOne({
     }
   };
 
+  // 입력한 자격증과 입력 추천 목록을 없애는 함수
   const removeAllTextCertificate = () => {
     if (certificateInputRef.current && certificateRecommendRef.current) {
       certificateInputRef.current.value = '';
@@ -142,7 +160,7 @@ export default function SearchStepOne({
         <OrganizationText
           isDarkMode={isDarkMode}
           onClick={() => {
-            setSelectedOrg(0);
+            toggleOrg(0);
           }}
           orgNumber={0}
           selectedOrg={selectedOrg}
@@ -153,7 +171,7 @@ export default function SearchStepOne({
         <OrganizationText
           isDarkMode={isDarkMode}
           onClick={() => {
-            setSelectedOrg(1);
+            toggleOrg(1);
           }}
           orgNumber={1}
           selectedOrg={selectedOrg}
@@ -164,7 +182,7 @@ export default function SearchStepOne({
         <OrganizationText
           isDarkMode={isDarkMode}
           onClick={() => {
-            setSelectedOrg(2);
+            toggleOrg(2);
           }}
           orgNumber={2}
           selectedOrg={selectedOrg}
@@ -175,7 +193,7 @@ export default function SearchStepOne({
         <OrganizationText
           isDarkMode={isDarkMode}
           onClick={() => {
-            setSelectedOrg(3);
+            toggleOrg(3);
           }}
           orgNumber={3}
           selectedOrg={selectedOrg}

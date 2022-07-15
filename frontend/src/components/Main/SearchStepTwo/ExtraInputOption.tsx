@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent } from 'react';
 import { ExtraOption } from './ExtraOption';
 
 interface Props {
