@@ -18,15 +18,12 @@ class Specialty(Base):
     military_type_id = Column(Integer, ForeignKey('type.id'), nullable=False)
     
     name = Column(String(20), nullable=False)
-    specialty_type = Column(String(10), nullable=False)
+    specialty_type = Column(Integer, nullable=False)
+    mma_id = Column(String(10), nullable=False)
     perfect_score = Column(Integer, nullable=False)
     has_eligibility = Column(Boolean, nullable=False)
     comment = Column(String, nullable=True)
     info_url = Column(String, nullable=False)
-    every_major_direct = Column(Boolean, nullable=False)
-    every_major_indirect = Column(Boolean, nullable=False)
-    every_certificate = Column(Boolean, nullable=False)
-    is_deleted = Column(Boolean, nullable=False)
 
     type = relationship("Military_Type", back_populates="specialty")
     recruit_results = relationship("Recruit_result", back_populates="specialty", cascade="all, delete")
@@ -76,7 +73,7 @@ class SpecialtyMajor(Base):
 
     specialty_id = Column(Integer, ForeignKey("specialty.id"), nullable=False)
     major_id = Column(Integer, ForeignKey("major.id"), nullable=False)
-
+    is_direct = Column(Boolean, nullable=False)
     specialties = relationship(
         'Specialty',  back_populates='majors')
     majors = relationship(

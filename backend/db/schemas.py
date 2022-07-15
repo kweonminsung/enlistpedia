@@ -1,5 +1,6 @@
 from typing import Dict, List, Optional
 from pydantic import BaseModel
+from enum import IntEnum
 
 # 가산점 정보
 class ExtraPointInfo(BaseModel):
@@ -10,15 +11,17 @@ class ExtraPointInfo(BaseModel):
 # 특기 검색시 요청 Body
 class SpecialtySearch(BaseModel):
     military_type: List[int]
-    major_id: int
-    grade: int
-    certificates_id: int
+    major_id: Optional[int] = None
+    grade: Optional[int] = None
+    certificates_id: List[int]
     absent_days: int
     extra_points: List[ExtraPointInfo]
 
 class RecruitResult(BaseModel):
     enlist_date: str
     min_score: int
+    class Config():
+        orm_mode = True
 
 class ScoreData(BaseModel):
     article: str
@@ -31,14 +34,13 @@ class Specialty(BaseModel):
     id: int
     name: str
     specialty_type: str
-    applicable: bool
-    my_tot_score: int
     perfect_score: int
     info_url: str
-    comment: str
-    previous_score_list: List[RecruitResult]
-    score_data: List[ScoreData]
-
-# 반환할 지원 가는 특기 리스트
-class SpecialtyList(BaseModel):
-    specialities: List[Specialty]
+    comment: Optional[str] = None
+    recruit_results: Optional[List[RecruitResult]] = None
+    applicable: Optional[bool] = False
+    score_data: Optional[List[ScoreData]] = None
+    my_tot_score: Optional[int] = None
+    class Config():
+        orm_mode = True
+    
