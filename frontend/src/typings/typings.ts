@@ -9,13 +9,15 @@ export interface Certificate {
 }
 
 export interface SpecialtyRequest {
-  military_type: number[];
+  military_type: number;
   major_id: number | null;
   grade: number | null;
   certificates_id: number[];
   absent_days: number;
-  blood_donation: number;
-  volunteer_time: number;
+  common_points: {
+    description: string;
+    score: number;
+  }[];
   extra_points: {
     specialty_id: number;
     description: string;

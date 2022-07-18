@@ -4,16 +4,16 @@ if ! [ -d "logs" ]; then
     mkdir logs
 fi
 
-if ! [ -d "backend/venv" ]; then
-    cd backend
+cd backend
+if ! [ -d "venv" ]; then
     python -m venv venv
+    . venv/Scripts/activate
     pip install -r requirements.txt
-    cd ../
+else
+    . venv/Scripts/activate
 fi
 
-. backend/venv/Scripts/activate
-cd backend
-nohup uvicorn main:app --reload --port 3001 > ../logs/backend_log_$(date +%s).txt &
+nohup uvicorn main:app --reload --port 3001 > ../logs/backend_log_$(date +%s).txt 2>&1 &
 cd ../frontend
 
 if ! [ -d "node_modules" ]; then

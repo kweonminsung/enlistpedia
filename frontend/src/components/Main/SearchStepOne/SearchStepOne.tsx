@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { ThemeContext } from '../../../context/ThemeContext';
 import { Major, Certificate } from '../../../typings/typings';
-import { ExtraPoint } from '../SearchStepTwo/ExtraOption';
+import { ExtraPoint } from '../SearchStepThree/ExtraOption';
 import {
   OrganizationText,
   SearchStepContainer,
@@ -20,6 +20,7 @@ import {
   RemoveAllTextBtn,
   GradeText,
   CertificateInput,
+  AttendText,
 } from './SearchStepOne.styles';
 import { SelectedCertificateContainer } from './SelectedCertificateContainer';
 
@@ -30,6 +31,8 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   setSelectedMajor: React.Dispatch<React.SetStateAction<Major | null>>;
   selectedGrade: number;
   setSelectedGrade: React.Dispatch<React.SetStateAction<number>>;
+  selectedAttend: number;
+  setSelectedAttend: React.Dispatch<React.SetStateAction<number>>;
   selectedCert: Certificate[];
   setSelectedCert: React.Dispatch<React.SetStateAction<Certificate[]>>;
   extraPoint: ExtraPoint[];
@@ -43,6 +46,8 @@ export default function SearchStepOne({
   setSelectedMajor,
   selectedGrade,
   setSelectedGrade,
+  selectedAttend,
+  setSelectedAttend,
   selectedCert,
   setSelectedCert,
   extraPoint,
@@ -61,12 +66,6 @@ export default function SearchStepOne({
 
   // 강제 리렌더링
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
-
-  useEffect(() => {
-    if (majorInputRef.current && selectedMajor) {
-      majorInputRef.current.value = selectedMajor.name;
-    }
-  }, []);
 
   // 편제를 변경하는 함수(추가 정보를 입력한 이력이 있으면 삭제 여부를 물어봄)
   const toggleOrg = (orgNumber: number) => {
@@ -240,6 +239,7 @@ export default function SearchStepOne({
         <input
           type="text"
           placeholder="입력 / 해당 없음"
+          defaultValue={selectedMajor?.name}
           onChange={autoCompleteMajor}
           ref={majorInputRef}
         />
@@ -294,8 +294,34 @@ export default function SearchStepOne({
             selectedMajor={selectedMajor}
             disabled={selectedMajor === null}
           >
-            4학년+
+            4학년
           </GradeText>
+        </GradeContainer>
+        <GradeContainer>
+          <AttendText
+            isDarkMode={isDarkMode}
+            onClick={() => {
+              setSelectedAttend(0);
+            }}
+            attend={0}
+            selectedAttend={selectedAttend}
+            selectedMajor={selectedMajor}
+            disabled={selectedMajor === null}
+          >
+            재학
+          </AttendText>
+          <AttendText
+            isDarkMode={isDarkMode}
+            onClick={() => {
+              setSelectedAttend(1);
+            }}
+            attend={1}
+            selectedAttend={selectedAttend}
+            selectedMajor={selectedMajor}
+            disabled={selectedMajor === null}
+          >
+            수료
+          </AttendText>
         </GradeContainer>
       </MajorInput>
       <p>자격증 / 면허증을 입력해주십시오</p>

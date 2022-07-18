@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useReducer } from 'react';
 import { Certificate } from '../../../typings/typings';
-import { ExtraInput } from '../SearchStepTwo/SearchStepTwo.styles';
+import { ExtraInput } from '../SearchStepThree/SearchStepThree.styles';
 
 const SelectedCertificate = styled(ExtraInput)<{
   isDarkMode: boolean;

@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import { ExtraOption } from './ExtraOption';
+import { ExtraOption } from '../SearchStepThree/ExtraOption';
 
 interface Props {
   selectedOption: ExtraOption;

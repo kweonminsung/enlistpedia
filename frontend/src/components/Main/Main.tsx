@@ -13,7 +13,7 @@ export default function Main() {
 
   const searchToggle = () => {
     if (!isSearching)
-      scrollTo({
+      window.scrollTo({
         top: 400,
         behavior: 'smooth',
       });

@@ -1,7 +1,7 @@
-import { EXTRAOPTIONBYORG, ExtraPoint } from './ExtraOption';
+import { EXTRAOPTIONBYORG, ExtraPoint } from '../SearchStepThree/ExtraOption';
 import styled from '@emotion/styled';
-import { ExtraInput } from './SearchStepTwo.styles';
 import { useReducer } from 'react';
+import { ExtraInput } from '../SearchStepThree/SearchStepThree.styles';
 
 const SelectedPoint = styled(ExtraInput)<{
   isDarkMode: boolean;
