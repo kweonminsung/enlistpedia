@@ -10,7 +10,7 @@ class ExtraPointInfo(BaseModel):
 
 # 특기 검색시 요청 Body
 class SpecialtySearch(BaseModel):
-    military_type: List[int]
+    military_type: int
     major_id: Optional[int] = None
     grade: Optional[int] = None
     certificates_id: List[int]
@@ -34,7 +34,7 @@ class Specialty(BaseModel):
     id: int
     name: str
     specialty_type: str
-    perfect_score: int
+    perfect_score: Optional[int] = None
     info_url: str
     comment: Optional[str] = None
     recruit_results: Optional[List[RecruitResult]] = None
