@@ -285,7 +285,7 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
         
         elif military_type == 2:
             data.military_type = "공군"
-            if not spec_type:
+            if not specialty_type:
                 data.specialty_type = "기술병"
                 if data.perfect_score:
                     my_tot_score = 0
