@@ -93,3 +93,10 @@ class SpecialtyCertificate(Base):
         'Specialty',  back_populates='certificates')
     certificates = relationship(
         'Certificate',  back_populates='specialties')
+    
+class Hits(Base):
+    __tablename__ = 'hits'
+    
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True, unique=True)
+    
+    count = Column(Integer, nullable=False)

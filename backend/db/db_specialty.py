@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import or_
 from db.models import Specialty, SpecialtyCertificate, SpecialtyMajor, Major, Certificate
 from db.schemas import SpecialtySearch
 from fastapi import HTTPException

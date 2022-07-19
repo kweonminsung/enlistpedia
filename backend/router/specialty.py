@@ -9,6 +9,7 @@ import requests
 import xmltodict
 import datetime
 import time
+
 router = APIRouter(
     prefix="/specialties",
     tags=["specialty"]
@@ -45,6 +46,7 @@ def get_current_applible_data():
 
 def get_absent_score(military_type_id, is_normal, absent_day):
     score_data = {'article' : '고교 출결사항', 'description' : '', 'score': 0, 'perfect_score': 10}
+    if is_normal: score_data['perfect_score'] = 20
     score = 0
     if military_type_id != 3:
         if absent_day == 0:
@@ -65,7 +67,6 @@ def get_absent_score(military_type_id, is_normal, absent_day):
         
         if is_normal:
             score_data['score'] = score + 10
-            score_data['prefect_score'] = 20
             return score_data
         else:
             score_data['score'] = score
@@ -93,7 +94,6 @@ def get_absent_score(military_type_id, is_normal, absent_day):
             
         if is_normal:
             score_data['score'] = score + 10
-            score_data['prefect_score'] = 20
             return score_data
         else:
             score_data['score'] = score
@@ -494,5 +494,5 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                 
                 data.my_tot_score = my_tot_score
                 data.score_data = score_data
-                
+
     return query
