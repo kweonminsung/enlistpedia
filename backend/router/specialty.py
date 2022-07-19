@@ -8,7 +8,7 @@ from db import db_specialty
 import requests
 import xmltodict
 import datetime
-
+import time
 router = APIRouter(
     prefix="/specialties",
     tags=["specialty"]
@@ -20,24 +20,31 @@ def get_current_applible_data():
     SERVICE_KEY = 'exMtVfp9DmlY3K9uosd+lTfMzhARSBztPIWcfNkIfvPhd2RVU5um5nScma04DvpsQorI5jfdXSnyH0FnxcEn/A=='
     APPLY_STATUS_INFO_URL = 'http://apis.data.go.kr/1300000/MJBGJWJeopSuHH3/list'
 
-    params ={'serviceKey' : SERVICE_KEY, 'pageNo' : '1', 'numOfRows' : '1000' }
-
-    response = requests.get(APPLY_STATUS_INFO_URL, params=params)
-    response_dict = xmltodict.parse(response.content)
-
-    data = response_dict['response']['body']['items']['item']
-    
     result = []
-    
-    temp_date = '20220701'
-    
-    for _data in data:
-        if datetime.datetime.strptime(_data['jeopsuJrdtm'], '%Y%m%d') >  datetime.datetime.today():
-            result.append(_data['gsteukgiCd'])
+    pageNo = 1
+    while True:
+        params ={'serviceKey' : SERVICE_KEY, 'pageNo' : pageNo, 'numOfRows' : '100' }
+        try:
+            response = requests.get(APPLY_STATUS_INFO_URL, params=params)
+        except:
+            time.sleep(0.1)
+            continue
+        response_dict = xmltodict.parse(response.content)
+        try:
+            data = response_dict['response']['body']['items']['item']
+        except:
+            
+            break
+        
+        temp_date ='20220701'
+        for _data in data:
+            if datetime.datetime.strptime(_data['jeopsuJrdtm'], '%Y%m%d') >  datetime.datetime.today():
+                result.append(_data['gsteukgiCd'])
+        pageNo +=1 
     return result
 
 def get_absent_score(military_type_id, is_normal, absent_day):
-    score_data = {'article' : '고교 출결사항', 'description' : '', 'score': 0}
+    score_data = {'article' : '고교 출결사항', 'description' : '', 'score': 0, 'perfect_score': 10}
     score = 0
     if military_type_id != 3:
         if absent_day == 0:
@@ -58,6 +65,7 @@ def get_absent_score(military_type_id, is_normal, absent_day):
         
         if is_normal:
             score_data['score'] = score + 10
+            score_data['prefect_score'] = 20
             return score_data
         else:
             score_data['score'] = score
@@ -85,13 +93,14 @@ def get_absent_score(military_type_id, is_normal, absent_day):
             
         if is_normal:
             score_data['score'] = score + 10
+            score_data['prefect_score'] = 20
             return score_data
         else:
             score_data['score'] = score
             return score_data
 
 def get_major_score(grade:int):
-    score_data = {'article' : '전공', 'description' : '', 'score': 0}
+    score_data = {'article' : '전공', 'description' : '', 'score': 0, 'perfect_score': 40}
     if grade == 1:
         score_data['score'] = 26
         score_data['description'] = '관련 전공 1학년 재학'
@@ -120,56 +129,79 @@ def get_major_score(grade:int):
     return score_data
 
 def get_army_certificate_score(max_rank: int, is_direct: bool, comment:str):
-    score_data = {'article': '자격증/면허', 'description': comment, 'score': 0}
-    if max_rank == 9:
-        score_data['score'] = 90
-    elif max_rank == 8:
-        score_data['score'] = 87
-    elif max_rank == 7:
-        score_data['score'] = 85
+    score_data = {'article': '자격증/면허', 'description': comment, 'score': 0, 'perfect_score':50}
+    if max_rank == 5:
+        score_data['score'] = 50
+        if not is_direct: 
+            score_data['score'] -= 10
+            score_data['description'] = '(간접) ' + score_data['description']
+        else: score_data['description'] = '(직접) ' + score_data['description']
+    elif max_rank == 4:
+        score_data['score'] = 45
+        if not is_direct: 
+            score_data['score'] -= 10
+            score_data['description'] = '(간접) ' + score_data['description']
+        else: score_data['description'] = '(직접) ' + score_data['description']
+    elif max_rank == 3:
+        score_data['score'] = 40
+        if not is_direct: 
+            score_data['score'] -= 10
+            score_data['description'] = '(간접) ' + score_data['description']
+        else: score_data['description'] = '(직접) ' + score_data['description']
     else:
-        if max_rank == 5:
-            score_data['score'] = 50
-            if not is_direct: 
-                score_data['score'] -= 10
-                score_data['description'] = '(간접) ' + score_data['description']
-            else: score_data['description'] = '(직접) ' + score_data['description']
-        elif max_rank == 4:
-            score_data['score'] = 45
-            if not is_direct: 
-                score_data['score'] -= 10
-                score_data['description'] = '(간접) ' + score_data['description']
-            else: score_data['description'] = '(직접) ' + score_data['description']
-        elif max_rank == 3:
-            score_data['score'] = 40
-            if not is_direct: 
-                score_data['score'] -= 10
-                score_data['description'] = '(간접) ' + score_data['description']
-            else: score_data['description'] = '(직접) ' + score_data['description']
+        if not is_direct:
+            score_data['score'] = 25
+            score_data['description'] = '(간접) ' + score_data['description']
         else:
-            if not is_direct:
-                score_data['score'] = 25
-                score_data['description'] = '(간접) ' + score_data['description']
-            else:
-                if max_rank == 2:
-                    score_data['score'] = 30
-                elif max_rank == 1:
-                    score_data['score'] = 26
-                score_data['description'] = '(직접) ' + score_data['description']        
+            if max_rank == 2:
+                score_data['score'] = 30
+            elif max_rank == 1:
+                score_data['score'] = 26
+            score_data['description'] = '(직접) ' + score_data['description']        
     return score_data
+
+def get_else_certificate_score(max_rank: int, is_normal: bool, comment: str):
+    score_data = {'article': '자격증/면허', 'description': comment, 'score': 0, 'perfect_score': 50}
+    if is_normal: score_data['perfect_score'] = 70
     
-@router.post("", summary="Get every applicable MOS info and score info")
+    if max_rank == 9:
+        score_data['score'] = 50
+    elif max_rank == 8:
+        score_data['score'] = 45
+    elif max_rank == 7:
+        score_data['score'] = 40
+    elif max_rank == 5:
+        score_data['score'] = 50
+        if is_normal: score_data['score'] = 70
+    elif max_rank == 4:
+        score_data['score'] = 45
+        if is_normal: score_data['score'] = 68
+    elif max_rank == 3:
+        score_data['score'] = 40
+        if is_normal: score_data['score'] = 66
+    elif max_rank == 2:
+        score_data['score'] = 30
+        if is_normal: score_data['score'] = 64
+    elif max_rank == 1:
+        score_data['score'] = 26
+        if is_normal: score_data['score'] = 62
+    else:
+        score_data['score'] = 20
+        if is_normal: score_data['score'] = 60
+        
+    return score_data
+
+@router.post("", summary="Get every applicable MOS info and score info", response_model=List[Specialty])
 def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
     
     appliable_mma_id = get_current_applible_data()
     query, specialty_major, specialty_certificate = db_specialty.get_specialties(db, body)
-    
+
     for data in query:
         if data.mma_id in appliable_mma_id:
             data.applicable = True
             
         if data.perfect_score == -1:
-            data.my_tot_score = None
             data.perfect_score = None
             
         military_type = data.military_type_id
@@ -190,12 +222,12 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                 my_tot_score += absent_result['score']
 
                 # 전공
-                if specialty_id != 84:
+                if specialty_id != 84: # 운전병 아닐 경우
                     if specialty_id in specialty_major:
                         result = db_specialty.get_specialty_major_info(db, specialty_id, body.major_id)
                         major_result = get_major_score(body.grade)     
                     else:
-                        major_result = {'article' : '전공', 'description' : '비전공', 'score': 20}
+                        major_result = {'article' : '전공', 'description' : '비전공', 'score': 20, 'perfect_score': 40}
                 
                     score_data.append(major_result)
                     my_tot_score += major_result['score']
@@ -204,17 +236,24 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                 # 자격증
                 if specialty_id in specialty_certificate:
                     result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
-                    if specialty_id != 84:
+                    if specialty_id != 84: # 운전병 아닐 경우 
                         certificate_result = get_army_certificate_score(result['rank'],result['is_direct'],result['comment'])
                     else:
+                        certificate_result = {'article': '자격증/면허', 'description': '', 'score': 0, 'perfect_score':90}
                         if result['rank'] == 5:
-                            certificate_result = {'article': '자격증/면허', 'description': '대형/특수', 'score': 90}
+                            certificate_result['description'] = '대형/특수'
+                            certificate_result['score'] = 90
+                            
                         elif result['rank'] == 4:
-                            certificate_result = {'article': '자격증/면허', 'description': '1종보통', 'score': 87}
+                            certificate_result['description'] = '1종보통'
+                            certificate_result['score'] = 87
+                            
                         else:
-                            certificate_result = {'article': '자격증/면허', 'description': '2종보통', 'score': 85}
+                            certificate_result['description'] = '2종보통'
+                            certificate_result['score'] = 85
+                        
                 else:
-                    certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 20}
+                    certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 20, 'perfect_score':50}
 
                 score_data.append(certificate_result)
                 my_tot_score += certificate_result['score']
@@ -259,24 +298,55 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                         my_tot_score += absent_result['score']
                         
                         # 자격증
-                        
-                        # 가산점
-                        
+                        if specialty_id in specialty_certificate:
+                            result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
+                            certificate_result = get_else_certificate_score(result['rank'],1,result['comment'])
+                        else:
+                            certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 60, 'perfect_score': 70}
+                            
+                            
+                        score_data.append(certificate_result)
+                        my_tot_score += certificate_result['score']
+                    
                     else:
                         # 출결
-                        
                         absent_result = get_absent_score(military_type,0,body.absent_days)                
                         score_data.append(absent_result)
                     
                         my_tot_score += absent_result['score']
                     
                         # 전공
-                    
+                        if specialty_id in specialty_major:
+                            result = db_specialty.get_specialty_major_info(db, specialty_id, body.major_id)
+                            major_result = get_major_score(body.grade)     
+                        else:
+                            major_result = {'article' : '전공', 'description' : '비전공', 'score': 20, 'perfect_score': 40}
+                
+                        score_data.append(major_result)
+                        my_tot_score += major_result['score']
                         
                         # 자격증
                     
-                        # 가산점
-                        
+                        if specialty_id in specialty_certificate:
+                            result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
+                            certificate_result = get_else_certificate_score(result['rank'],0,result['comment'])
+                        else:
+                            certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 20, 'perfect_score': 50}
+                            
+                            
+                        score_data.append(certificate_result)
+                        my_tot_score += certificate_result['score']
+                    # 가산점
+                    
+                    tot_extra_points = 0
+                    for points in body.extra_points:
+                        if points.specialty_id == -1 or points.specialty_id == data.id:
+                            if (tot_extra_points + points.score) > 15: break
+                            else:
+                                tot_extra_points += points.score
+                            score_data.append({'article':'가산점','description':points.description, 'score':points.score})
+                
+                    my_tot_score += tot_extra_points   
                     
                     data.my_tot_score = my_tot_score
                     data.score_data = score_data
@@ -285,7 +355,7 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
         
         elif military_type == 2:
             data.military_type = "공군"
-            if not spec_type:
+            if not specialty_type:
                 data.specialty_type = "기술병"
                 if data.perfect_score:
                     my_tot_score = 0
@@ -301,8 +371,17 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                         my_tot_score += absent_result['score']
 
                         # 자격증
+                        if specialty_id in specialty_certificate:
+                            result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
+                            certificate_result = get_else_certificate_score(result['rank'],1,result['comment'])
+                        else:
+                            certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 60, 'perfect_score': 70}
+                            
+                            
+                        score_data.append(certificate_result)
+                        my_tot_score += certificate_result['score']
                         
-                        # 가산점
+
                         
                     else:
                         # 출결
@@ -312,10 +391,36 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                         my_tot_score += absent_result['score']
                     
                         # 전공
-                      
-                        # 자격증
+                        if specialty_id in specialty_major:
+                            result = db_specialty.get_specialty_major_info(db, specialty_id, body.major_id)
+                            major_result = get_major_score(body.grade)     
+                        else:
+                            major_result = {'article' : '전공', 'description' : '비전공', 'score': 20, 'perfect_score': 40}
+                
+                        score_data.append(major_result)
+                        my_tot_score += major_result['score']
                         
-                        # 가산점
+                        # 자격증
+                        if specialty_id in specialty_certificate:
+                            result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
+                            certificate_result = get_else_certificate_score(result['rank'],0,result['comment'])
+                        else:
+                            certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 20, 'perfect_score': 50}
+                            
+                            
+                        score_data.append(certificate_result)
+                        my_tot_score += certificate_result['score']
+                        
+                    # 가산점
+                    tot_extra_points = 0
+                    for points in body.extra_points:
+                        if points.specialty_id == -1 or points.specialty_id == data.id:
+                            if (tot_extra_points + points.score) > 15: break
+                            else:
+                                tot_extra_points += points.score
+                            score_data.append({'article':'가산점','description':points.description, 'score':points.score})
+                
+                    my_tot_score += tot_extra_points 
 
 
                     data.my_tot_score = my_tot_score
@@ -338,8 +443,15 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                     my_tot_score += absent_result['score']
                     
                     # 자격증
-                    
-                    # 가산점
+                    if specialty_id in specialty_certificate:
+                        result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
+                        certificate_result = get_else_certificate_score(result['rank'],1,result['comment'])
+                    else:
+                        certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 60, 'perfect_score': 70}
+                        
+                        
+                    score_data.append(certificate_result)
+                    my_tot_score += certificate_result['score']
                 
                 else:
                     # 출결
@@ -348,18 +460,39 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                     my_tot_score += absent_result['score']
                     
                     # 전공
-                    
+                    if specialty_id in specialty_major:
+                        result = db_specialty.get_specialty_major_info(db, specialty_id, body.major_id)
+                        major_result = get_major_score(body.grade)     
+                    else:
+                        major_result = {'article' : '전공', 'description' : '비전공', 'score': 20, 'perfect_score': 40}
+                
+                    score_data.append(major_result)
+                    my_tot_score += major_result['score']
+                        
                     # 자격증
+                    if specialty_id in specialty_certificate:
+                        result = db_specialty.get_specialty_certificate_info(db, specialty_id, body.certificates_id)
+                        certificate_result = get_else_certificate_score(result['rank'],0,result['comment'])
+                    else:
+                        certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 20, 'perfect_score': 50}
+
+                    score_data.append(certificate_result)
+                    my_tot_score += certificate_result['score']
                     
-                    # 가산점
+     
+                # 가산점
+     
+                tot_extra_points = 0
+                for points in body.extra_points:
+                    if points.specialty_id == -1 or points.specialty_id == data.id:
+                        if (tot_extra_points + points.score) > 15: break
+                        else:
+                            tot_extra_points += points.score
+                        score_data.append({'article':'가산점','description':points.description, 'score':points.score})
+                
+                my_tot_score += tot_extra_points 
                 
                 data.my_tot_score = my_tot_score
                 data.score_data = score_data
                 
-                # 전공
-                
-                # 자격증
-                
-                # 가산점
-    
     return query

@@ -27,6 +27,7 @@ class ScoreData(BaseModel):
     article: str
     description: str
     score: int
+    perfect_score: Optional[int] = 15
 
 # 지원 가능한 특기
 class Specialty(BaseModel):
