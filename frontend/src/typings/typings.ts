@@ -35,10 +35,12 @@ export interface Specialty {
   perfect_score: number;
   info_url: string;
   comment: string;
-  previous_score_list: {
-    enlist_date: string;
-    min_score: number;
-  }[];
+  previous_score_list:
+    | {
+        enlist_date: string;
+        min_score: number;
+      }[]
+    | null;
   score_data: {
     article: string;
     description: string;

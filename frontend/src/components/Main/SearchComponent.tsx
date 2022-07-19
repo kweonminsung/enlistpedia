@@ -19,6 +19,7 @@ import { SearchStepThree } from './SearchStepThree/SearchStepThree';
 import { EXTRAOPTIONBYORG, ExtraPoint } from './SearchStepThree/ExtraOption';
 import { SearchStepTwo } from './SearchStepTwo/SearchStepTwo';
 import { COMMONOPTIONS } from './SearchStepTwo/CommonOption';
+import { SearchResult } from './SearchResult/SearchReault';
 
 export default function SearchComponent() {
   const TOTALSTAGES = 3;
@@ -42,6 +43,9 @@ export default function SearchComponent() {
   // Step three
   const [extraPoint, setExtraPoint] = useState<ExtraPoint[]>([]);
 
+  // Result
+  const [result, setResult] = useState<Specialty[]>([]);
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 400,
@@ -58,6 +62,9 @@ export default function SearchComponent() {
   };
 
   const goToPrevStep = () => {
+    if (searchStep === TOTALSTAGES) {
+      setResult([]);
+    }
     setSearchStep(searchStep - 1);
     scrollToTop();
   };
@@ -113,8 +120,11 @@ export default function SearchComponent() {
       extra_points: parsedExtraPoint,
     };
     console.log(data);
-    const result: Specialty[] = await axios.post('/specialties', data);
-    console.log(result);
+    const tempData = (await (
+      await axios.post('/specialties', data)
+    ).data) as Specialty[];
+    console.log(tempData);
+    setResult(tempData);
   };
 
   return (
@@ -151,7 +161,9 @@ export default function SearchComponent() {
           extraPoint={extraPoint}
           setExtraPoint={setExtraPoint}
         ></SearchStepThree>
-      ) : null}
+      ) : (
+        <SearchResult result={result}></SearchResult>
+      )}
 
       <BottomButtons>
         {searchStep > 0 ? (
