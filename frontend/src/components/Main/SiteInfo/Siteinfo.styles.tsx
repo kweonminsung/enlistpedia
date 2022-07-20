@@ -28,7 +28,7 @@ export const CounterConatiner = styled.div<{
 }>`
   display: flex;
   gap: 5rem;
-  margin: 5rem;
+  margin: 4rem;
   text-align: center;
   font-size: 1.2rem;
   color: ${({ isDarkMode }) => (!isDarkMode ? '#000000' : '#FFFFFF')};

@@ -30,7 +30,7 @@ export default function Title() {
       </h2>
       <h1
         className={css`
-          font-size: 3.8rem;
+          font-size: 3.5rem;
           margin-top: 0.6rem;
         `}
       >

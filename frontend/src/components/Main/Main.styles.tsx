@@ -29,4 +29,11 @@ export const SearchButton = styled.button<{
       ? '#FFFFFF'
       : '#3D3D3D'};
   transition: all 0.25s linear;
+  :hover {
+    border-radius: ${({ isSearching }) => (!isSearching ? '0.8rem' : '')};
+    background-color: ${({ isDarkMode, isSearching }) =>
+      !isSearching ? (!isDarkMode ? '#7E8D6D' : '#ADCE8A') : ''};
+    color: ${({ isDarkMode, isSearching }) =>
+      !isSearching ? (!isDarkMode ? '#FFFFFF' : '#3D3D3D') : ''};
+  }
 `;

@@ -27,8 +27,6 @@ export function Accordion({ isDarkMode, specialty }: Props) {
     window.open(specialty.info_url);
   };
 
-  console.log(specialty);
-
   return (
     <AccordionContainer>
       <AccordionHeader

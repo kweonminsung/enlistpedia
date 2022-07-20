@@ -6,9 +6,10 @@ import {
   CounterConatiner,
 } from './Siteinfo.styles';
 import { ThemeContext } from '../../../context/ThemeContext';
-import { useContext, useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import useOnScreen from '../hooks/useOnScreen';
 import CountUp from 'react-countup';
+import axios from 'axios';
 
 export default function SiteInfo() {
   const { isDarkMode } = useContext(ThemeContext);
@@ -16,9 +17,13 @@ export default function SiteInfo() {
   const explainRef: any = useRef<HTMLDivElement>();
   const onExplain: boolean = useOnScreen<HTMLDivElement>(explainRef, '-50px');
 
-  // useEffect(() => {
+  const [count, setCount] = useState<number>(0);
 
-  // }, [])
+  useEffect(() => {
+    (async function () {
+      setCount(await (await axios.get('hits')).data.count);
+    })();
+  }, []);
 
   return (
     <>
@@ -26,7 +31,9 @@ export default function SiteInfo() {
 
       <CounterConatiner isDarkMode={isDarkMode} ref={explainRef}>
         <div>
-          <p>{onExplain && <CountUp end={100} duration={0.75} prefix="+" />}</p>
+          <p>
+            {onExplain && <CountUp end={count} duration={0.75} prefix="+" />}
+          </p>
           <p>총 검색 횟수</p>
         </div>
         <div>

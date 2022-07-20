@@ -55,6 +55,7 @@ export default function SearchComponent() {
 
   const goToNextStep = () => {
     if (searchStep + 1 === TOTALSTAGES) {
+      increaseCount();
       getResult();
     }
     setSearchStep(searchStep + 1);
@@ -67,6 +68,10 @@ export default function SearchComponent() {
     }
     setSearchStep(searchStep - 1);
     scrollToTop();
+  };
+
+  const increaseCount = async () => {
+    await axios.post('hits');
   };
 
   const getResult = async () => {
@@ -119,11 +124,9 @@ export default function SearchComponent() {
       common_points: parsedCommonPoint,
       extra_points: parsedExtraPoint,
     };
-    console.log(data);
     const tempData = (await (
       await axios.post('/specialties', data)
     ).data) as Specialty[];
-    console.log(tempData);
     setResult(tempData);
   };
 

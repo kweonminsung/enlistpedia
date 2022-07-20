@@ -43,6 +43,12 @@ export const PrevStageButton = styled.button<{
     !isDarkMode ? '#F0F0F0' : '#707070'};
   color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
   font-size: 1.2rem;
+  transition: all 0.25s linear;
+  :hover {
+    background-color: ${({ isDarkMode }) =>
+      !isDarkMode ? '#7E8D6D' : '#ADCE8A'};
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#FFFFFF' : '#3D3D3D')};
+  }
 `;
 
 export const NextStageButton = styled.button<{
@@ -54,4 +60,10 @@ export const NextStageButton = styled.button<{
     !isDarkMode ? '#F0F0F0' : '#707070'};
   color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
   font-size: 1.2rem;
+  transition: all 0.25s linear;
+  :hover {
+    background-color: ${({ isDarkMode }) =>
+      !isDarkMode ? '#7E8D6D' : '#ADCE8A'};
+    color: ${({ isDarkMode }) => (!isDarkMode ? '#FFFFFF' : '#3D3D3D')};
+  }
 `;
