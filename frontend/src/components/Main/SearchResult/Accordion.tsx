@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import { useEffect, useRef, useState } from 'react';
-import { Specialty } from '../../../typings/typings';
+import { ScoreData, Specialty } from '../../../typings/typings';
 import Chart from 'react-apexcharts';
 import {
   AccordionContainer,
@@ -51,7 +51,13 @@ export function Accordion({ isDarkMode, specialty }: Props) {
           {specialty.military_type} / {specialty.specialty_type} /{' '}
           {specialty.name}
         </div>
-        <div>{specialty.applicable ? '모집 중' : '모집 종료'}</div>
+        <div
+          className={css`
+            color: ${specialty.applicable ? '#F98B8B' : ''};
+          `}
+        >
+          {specialty.applicable ? '모집 중' : '모집 종료'}
+        </div>
         <div>
           {specialty.my_tot_score && specialty.perfect_score
             ? `${specialty.my_tot_score} / ${specialty.perfect_score}`
@@ -93,21 +99,68 @@ export function Accordion({ isDarkMode, specialty }: Props) {
                     {specialty.my_tot_score} / {specialty.perfect_score}
                   </div>
                   <div>
-                    {specialty.score_data[1].score} /{' '}
-                    {specialty.score_data[1].perfect_score}
+                    {specialty.score_data.find(
+                      score => score.article === '전공'
+                    )
+                      ? `${
+                          (
+                            specialty.score_data.find(
+                              score => score.article === '전공'
+                            ) as ScoreData
+                          ).score
+                        } / ${
+                          (
+                            specialty.score_data.find(
+                              score => score.article === '전공'
+                            ) as ScoreData
+                          ).perfect_score
+                        }`
+                      : '-'}
                   </div>
                   <div>
-                    {specialty.score_data[0].score} /{' '}
-                    {specialty.score_data[0].perfect_score}
+                    {specialty.score_data.find(
+                      score => score.article === '고교 출결사항'
+                    )
+                      ? `${
+                          (
+                            specialty.score_data.find(
+                              score => score.article === '고교 출결사항'
+                            ) as ScoreData
+                          ).score
+                        } / ${
+                          (
+                            specialty.score_data.find(
+                              score => score.article === '고교 출결사항'
+                            ) as ScoreData
+                          ).perfect_score
+                        }`
+                      : '-'}
                   </div>
                   <div>
-                    {specialty.score_data[2].score} /{' '}
-                    {specialty.score_data[2].perfect_score}
+                    {specialty.score_data.find(
+                      score => score.article === '자격증/면허'
+                    )
+                      ? `${
+                          (
+                            specialty.score_data.find(
+                              score => score.article === '자격증/면허'
+                            ) as ScoreData
+                          ).score
+                        } / ${
+                          (
+                            specialty.score_data.find(
+                              score => score.article === '자격증/면허'
+                            ) as ScoreData
+                          ).perfect_score
+                        }`
+                      : '-'}
                   </div>
-                  {specialty.score_data.slice(3) !== [] ? (
+                  {specialty.score_data.filter(
+                    score => score.article === '가산점'
+                  ) !== [] ? (
                     <div>
                       {specialty.score_data
-                        .slice(3)
+                        .filter(score => score.article === '가산점')
                         .reduce(
                           (previousValue, currentValue) =>
                             previousValue + currentValue.score,

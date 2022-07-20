@@ -25,6 +25,13 @@ export interface SpecialtyRequest {
   }[];
 }
 
+export interface ScoreData {
+  article: string;
+  description: string;
+  score: number;
+  perfect_score: number;
+}
+
 export interface Specialty {
   military_type: string;
   id: number;
@@ -41,10 +48,5 @@ export interface Specialty {
         min_score: number;
       }[]
     | null;
-  score_data: {
-    article: string;
-    description: string;
-    score: number;
-    perfect_score: number;
-  }[];
+  score_data: ScoreData[];
 }
