@@ -12,7 +12,8 @@ app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
 origins = [
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "http://enlistpedia.org"
 ]
 
 app.add_middleware(
