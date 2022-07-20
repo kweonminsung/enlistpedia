@@ -1,25 +1,9 @@
 version: '3.7'
-
 services:
-  frontend:
-    image: frontend:1
-  networks:
-    - enlistpedia
-
-  backend:
-    image: backend:1
-    networks:
-      - enlistpedia
-
   nginx:
     image: nginx:latest
     ports:
       - 80:80
-    networks:
-      - enlistpedia
+    network_mode: host
     volumes:
-      - /home/ubuntu/nginx_conf/enlistpedia:/etc/nginx/conf.d
-
-networks:
-  enlistpedia:
-    driver: bridge
+      - /home/ubuntu/enlistpedia/conf.d:/etc/nginx/conf.d

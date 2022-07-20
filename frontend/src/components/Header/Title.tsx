@@ -23,14 +23,14 @@ export default function Title() {
     >
       <h2
         className={css`
-          font-size: 1.1rem;
+          font-size: 1.5rem;
         `}
       >
-        카투사 붙게 해주세요
+        군 선택도 현명하게
       </h2>
       <h1
         className={css`
-          font-size: 2.8rem;
+          font-size: 3.8rem;
           margin-top: 0.6rem;
         `}
       >
