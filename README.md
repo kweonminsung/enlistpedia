@@ -13,10 +13,23 @@ $ git clone https://github.com/kweonminsung/enlistpedia.git
 
 ## 2-1. Frontend
 
+### Install Dependencies
+
 ```bash
 $ cd frontend
 $ npm install
+```
+
+### Start Development Server
+
+```bash
 $ npm start
+```
+
+### Start Production Server
+
+```bash
+$ npm run build && serve -s build -l 3000
 ```
 
 ## 2-2. Backend
@@ -33,10 +46,16 @@ $ pip install --upgrade pip
 $ pip install -r requirements.txt
 ```
 
-### Start Server
+### Start Development Server
 
 ```bash
 $ uvicorn main:app --reload --port 3001
+```
+
+### Start Production Server
+
+```bash
+$ uvicorn main:app -reload --host 0.0.0.0 --port 3001
 ```
 
 ## Documentation

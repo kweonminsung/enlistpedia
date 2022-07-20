@@ -1,0 +1,15 @@
+FROM node:16
+
+RUN echo "version 1.0"
+
+WORKDIR /home/ubuntu/
+
+RUN git clone -b develop https://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@github.com/kweonminsung/enlistpedia.git
+
+WORKDIR /home/ubuntu/enlistpedia/frontend/
+
+RUN npm install
+
+EXPOSE 3000
+
+CMD npm run build && serve -s build -l 3000
