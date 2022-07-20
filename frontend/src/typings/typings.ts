@@ -35,7 +35,7 @@ export interface Specialty {
   perfect_score: number;
   info_url: string;
   comment: string;
-  previous_score_list:
+  recruit_results:
     | {
         enlist_date: string;
         min_score: number;
@@ -45,5 +45,6 @@ export interface Specialty {
     article: string;
     description: string;
     score: number;
+    perfect_score: number;
   }[];
 }

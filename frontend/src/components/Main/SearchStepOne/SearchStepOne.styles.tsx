@@ -52,7 +52,7 @@ export const OrganizationText = styled.button<{
       : !isDarkMode
       ? '#000000'
       : '#FFFFFF'};
-  transition: all 0.125s linear;
+  transition: all 0.25s linear;
   p {
     margin: 0;
     font-size: 0.8rem;
@@ -138,7 +138,7 @@ export const GradeText = styled.button<{
         ? '#000000'
         : '#FFFFFF'
       : '#909090'};
-  transition: all 0.125s linear;
+  transition: all 0.25s linear;
 `;
 
 export const AttendText = styled.button<{
@@ -160,7 +160,7 @@ export const AttendText = styled.button<{
         ? '#000000'
         : '#FFFFFF'
       : '#909090'};
-  transition: all 0.125s linear;
+  transition: all 0.25s linear;
 `;
 
 export const CertificateInput = styled(SearchStepInput)<{
@@ -191,5 +191,6 @@ export const CertificateInput = styled(SearchStepInput)<{
       !isDarkMode ? '#7E8D6D' : '#ADCE8A'};
     color: ${({ isDarkMode }) => (!isDarkMode ? '#FFFFFF' : '#3D3D3D')};
     font-size: 1rem;
+    transition: all 0.25s linear;
   }
 `;
