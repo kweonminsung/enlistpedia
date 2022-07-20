@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.64ac4f39.css",
-    "main.js": "/static/js/main.15ea363b.js",
+    "main.js": "/static/js/main.28bd6d7b.js",
     "static/media/NanumSquare_acB.ttf": "/static/media/NanumSquare_acB.ac4e2f27234150ae0de3.ttf",
     "static/media/NanumSquare_acEB.ttf": "/static/media/NanumSquare_acEB.0367d0c13d221c0ba33f.ttf",
     "index.html": "/index.html",
     "main.64ac4f39.css.map": "/static/css/main.64ac4f39.css.map",
-    "main.15ea363b.js.map": "/static/js/main.15ea363b.js.map"
+    "main.28bd6d7b.js.map": "/static/js/main.28bd6d7b.js.map"
   },
   "entrypoints": [
     "static/css/main.64ac4f39.css",
-    "static/js/main.15ea363b.js"
+    "static/js/main.28bd6d7b.js"
   ]
 }
