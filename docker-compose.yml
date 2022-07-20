@@ -1,9 +1,0 @@
-version: '3.7'
-services:
-  nginx:
-    image: nginx:latest
-    ports:
-      - 80:80
-    network_mode: host
-    volumes:
-      - /home/ubuntu/enlistpedia/conf.d:/etc/nginx/conf.d
