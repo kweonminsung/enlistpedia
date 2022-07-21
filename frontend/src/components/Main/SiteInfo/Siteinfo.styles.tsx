@@ -17,8 +17,8 @@ export const TempContainer = styled.div<{
 }>`
   margin: 4rem 0 15rem 0;
   border-radius: 1rem;
-  width: 100%;
-  height: 20rem;
+  width: 80%;
+  aspect-ratio: 4 / 3;
   background-color: ${({ isDarkMode }) =>
     !isDarkMode ? '#F0F0F0' : '#7A7A7A'};
 `;

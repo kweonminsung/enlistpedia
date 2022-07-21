@@ -1,0 +1,23 @@
+@font-face {
+  font-family: 'NanumSquare_ac';
+  src: local('NanumSquare_ac'),
+    url('fonts/NanumSquare_ac/NanumSquare_acB.ttf') format('ttf');
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+
+@font-face {
+  font-family: 'NanumSquare_ac';
+  src: local('NanumSquare_ac'),
+    url('fonts/NanumSquare_ac/NanumSquare_acEB.ttf') format('ttf');
+  font-weight: 700;
+  font-style: normal;
+  font-display: fallback;
+}
+
+* {
+  font-family: 'NanumSquare_ac';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
