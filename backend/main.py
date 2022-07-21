@@ -13,7 +13,7 @@ models.Base.metadata.create_all(bind=engine)
 
 origins = [
     "http://localhost:3000",
-    "http://enlistpedia.org"
+    "http://enlistpedia.org:80"
 ]
 
 app.add_middleware(
