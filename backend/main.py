@@ -11,14 +11,9 @@ app = FastAPI()
 # 데이터베이스 생성
 models.Base.metadata.create_all(bind=engine)
 
-origins = [
-    "http://localhost:3000",
-    "http://enlistpedia.org:80"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
