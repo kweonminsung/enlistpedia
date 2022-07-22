@@ -191,7 +191,10 @@ export function Accordion({ isDarkMode, specialty }: Props) {
               </SpecificScoreTable>
             </>
           ) : (
-            <p>점수 환산 데이터가 없습니다</p>
+            <>
+              <p>점수 환산 데이터가 없습니다</p>
+              <h5>(전문특기병은 점수 환산 데이터를 제공하지 않습니다)</h5>
+            </>
           )}
 
           {specialty.recruit_results ? (

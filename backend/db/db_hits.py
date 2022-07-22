@@ -14,4 +14,4 @@ def increase_hits(db: Session):
     query.first().count += 1
     db.commit()
     
-    return query().first().count
+    return query.first().count

@@ -84,83 +84,90 @@ export default function SearchStepOne({
 
   // 전공 자동 완성 관련 로직
   const autoCompleteMajor = async (e: React.ChangeEvent) => {
-    if (majorRecommendRef.current) {
-      const majorRecommendDiv = majorRecommendRef.current;
-      const inputElement: HTMLInputElement = e.target as HTMLInputElement;
-
-      majorRecommendDiv.innerHTML = '';
-      if (inputElement.value === '') return;
-
-      const majorList = await (
-        await axios.get(`/majors?match=${inputElement.value}`)
-      ).data;
-
-      majorList.forEach(function (
-        recommend: Major,
-        index: number,
-        array: Major[]
-      ) {
-        const majorRecommendElement: HTMLParagraphElement =
-          document.createElement('p');
-        majorRecommendElement.addEventListener('click', () => {
-          inputElement.value = array[index].name;
-          setSelectedMajor(array[index]);
-
-          majorRecommendDiv.innerHTML = '';
-        });
-        majorRecommendElement.innerText = `${recommend.name}`;
-        majorRecommendDiv.append(majorRecommendElement);
-      });
+    if (majorRecommendRef.current === null) {
+      return;
     }
+    const majorRecommendDiv = majorRecommendRef.current;
+    const inputElement: HTMLInputElement = e.target as HTMLInputElement;
+
+    majorRecommendDiv.innerHTML = '';
+    if (inputElement.value === '') return;
+
+    const majorList = await (
+      await axios.get(`/majors?match=${inputElement.value}`)
+    ).data;
+
+    majorList.forEach(function (
+      recommend: Major,
+      index: number,
+      array: Major[]
+    ) {
+      const majorRecommendElement: HTMLParagraphElement =
+        document.createElement('p');
+      majorRecommendElement.addEventListener('click', () => {
+        inputElement.value = array[index].name;
+        setSelectedMajor(array[index]);
+
+        majorRecommendDiv.innerHTML = '';
+      });
+      majorRecommendElement.innerText = `${recommend.name}`;
+      majorRecommendDiv.append(majorRecommendElement);
+    });
   };
 
   // 자격증 자동 완성 관련 로직
   const autoCompleteCertificate = async (e: React.ChangeEvent) => {
-    if (certificateRecommendRef.current) {
-      const certificateRecommendDiv = certificateRecommendRef.current;
-      const inputElement: HTMLInputElement = e.target as HTMLInputElement;
-
-      certificateRecommendDiv.innerHTML = '';
-      if (inputElement.value === '') return;
-
-      const certificateList = await (
-        await axios.get(`/certificates?match=${inputElement.value}`)
-      ).data;
-
-      certificateList.forEach(function (
-        recommend: Certificate,
-        index: number,
-        array: Certificate[]
-      ) {
-        const certificateRecommendElement: HTMLParagraphElement =
-          document.createElement('p');
-        certificateRecommendElement.addEventListener('click', () => {
-          inputElement.value = array[index].name;
-          setTempCert(array[index]);
-          certificateRecommendDiv.innerHTML = '';
-        });
-        certificateRecommendElement.innerText = `${recommend.name}`;
-        certificateRecommendDiv.append(certificateRecommendElement);
-      });
+    if (certificateRecommendRef.current === null) {
+      return;
     }
+    const certificateRecommendDiv = certificateRecommendRef.current;
+    const inputElement: HTMLInputElement = e.target as HTMLInputElement;
+
+    certificateRecommendDiv.innerHTML = '';
+    if (inputElement.value === '') return;
+
+    const certificateList = await (
+      await axios.get(`/certificates?match=${inputElement.value}`)
+    ).data;
+
+    certificateList.forEach(function (
+      recommend: Certificate,
+      index: number,
+      array: Certificate[]
+    ) {
+      const certificateRecommendElement: HTMLParagraphElement =
+        document.createElement('p');
+      certificateRecommendElement.addEventListener('click', () => {
+        inputElement.value = array[index].name;
+        setTempCert(array[index]);
+        certificateRecommendDiv.innerHTML = '';
+      });
+      certificateRecommendElement.innerText = `${recommend.name}`;
+      certificateRecommendDiv.append(certificateRecommendElement);
+    });
   };
 
   // 입력한 전공과 입력 추천 목록을 없애는 함수
   const removeAllTextMajor = () => {
-    if (majorInputRef.current && majorRecommendRef.current) {
-      majorInputRef.current.value = '';
-      majorRecommendRef.current.innerHTML = '';
-      setSelectedMajor(null);
+    if (majorInputRef.current === null || majorRecommendRef.current === null) {
+      return;
     }
+    majorInputRef.current.value = '';
+    majorRecommendRef.current.innerHTML = '';
+    setSelectedMajor(null);
   };
 
   // 입력한 자격증과 입력 추천 목록을 없애는 함수
   const removeAllTextCertificate = () => {
-    if (certificateInputRef.current && certificateRecommendRef.current) {
-      certificateInputRef.current.value = '';
-      certificateRecommendRef.current.innerHTML = '';
-      setTempCert(null);
+    if (
+      certificateInputRef.current === null ||
+      certificateRecommendRef.current === null
+    ) {
+      return;
     }
+    certificateInputRef.current.value = '';
+    certificateRecommendRef.current.innerHTML = '';
+    setTempCert(null);
   };
 
   // 입력한 자격증을 배열에 넣는 함수

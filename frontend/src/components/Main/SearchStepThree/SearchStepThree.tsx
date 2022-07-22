@@ -33,20 +33,19 @@ export function SearchStepThree({
   const [extraIndex, setExtraIndex] = useState<number>(0);
 
   useEffect(() => {
-    if (extraSelectRef.current) {
-      const extraSelectDiv = extraSelectRef.current as HTMLSelectElement;
-
-      extraSelectDiv.innerHTML = '';
-      EXTRAOPTIONBYORG[selectedOrg].forEach(
-        (option: ExtraOption, index: number) => {
-          const tempOption: HTMLOptionElement =
-            document.createElement('option');
-          tempOption.value = index.toString();
-          tempOption.innerText = option.description;
-          extraSelectDiv.append(tempOption);
-        }
-      );
+    if (extraSelectRef.current === null) {
+      return;
     }
+    const extraSelectDiv = extraSelectRef.current as HTMLSelectElement;
+    extraSelectDiv.innerHTML = '';
+    EXTRAOPTIONBYORG[selectedOrg].forEach(
+      (option: ExtraOption, index: number) => {
+        const tempOption: HTMLOptionElement = document.createElement('option');
+        tempOption.value = index.toString();
+        tempOption.innerText = option.description;
+        extraSelectDiv.append(tempOption);
+      }
+    );
   }, [selectedOrg]);
 
   // 추가 정보의 유형을 저장하는 함수

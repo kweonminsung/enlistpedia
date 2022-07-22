@@ -81,6 +81,6 @@ export const SpecificScoreTable = styled(ScoreTable)<{
 `;
 
 export const GoToInfo = styled.div`
-  margin-top: 1rem;
+  margin-top: 2rem;
   cursor: pointer;
 `;

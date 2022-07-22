@@ -45,6 +45,7 @@ export default function SearchComponent() {
 
   // Result
   const [result, setResult] = useState<Specialty[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -65,6 +66,7 @@ export default function SearchComponent() {
   const goToPrevStep = () => {
     if (searchStep === TOTALSTAGES) {
       setResult([]);
+      setIsLoading(true);
     }
     setSearchStep(searchStep - 1);
     scrollToTop();
@@ -128,6 +130,7 @@ export default function SearchComponent() {
       await axios.post('/specialties', data)
     ).data) as Specialty[];
     setResult(tempData);
+    setIsLoading(false);
   };
 
   return (
@@ -165,7 +168,7 @@ export default function SearchComponent() {
           setExtraPoint={setExtraPoint}
         ></SearchStepThree>
       ) : (
-        <SearchResult result={result}></SearchResult>
+        <SearchResult result={result} isLoading={isLoading}></SearchResult>
       )}
 
       <BottomButtons>

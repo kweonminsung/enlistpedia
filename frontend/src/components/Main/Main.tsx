@@ -34,7 +34,7 @@ export default function Main() {
         isDarkMode={isDarkMode}
         isSearching={isSearching}
       >
-        찾아보기
+        시작하기
       </SearchButton>
       {isSearching ? <SearchComponent /> : null}
       <SiteInfo />
