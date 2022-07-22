@@ -20,25 +20,36 @@ def get_specialty_major_info(db: Session, specialty_id: int, major_id: int):
     return result
 
 
+
+def get_army_specialty_certificate_info(db:Session, specialty_id: int, certificates_id_list: List[int]):
+    ARMY_SCORE = [[0,25,25,30,35,40],[0,26,30,40,45,50]]
+    query = db.query(SpecialtyCertificate).filter(SpecialtyCertificate.specialty_id == specialty_id).filter(SpecialtyCertificate.certificate_id.in_(certificates_id_list)).all()
+
+    result = {'is_direct': False, 'rank': 0, 'comment': ''}
+    max_score = -1
+    for data in query:
+        if not data.is_direct: score = ARMY_SCORE[0][data.rank]# 간접
+        else: score = ARMY_SCORE[1][data.rank]
+        
+        if score > max_score:
+            result['is_direct'] = data.is_direct
+            result['rank'] = data.rank
+            result['comment'] = data.comment
+        
 def get_specialty_certificate_info(db:Session, specialty_id: int, certificates_id_list: List[int]):
     
     query = db.query(SpecialtyCertificate).filter(SpecialtyCertificate.specialty_id == specialty_id).filter(SpecialtyCertificate.certificate_id.in_(certificates_id_list)).all()
     
-    if query:
-        result = {'is_direct': False, 'rank': 0, 'comment': ''}
-        max_rank = -1
-        for data in query:
-            certificate_query = db.query(Certificate).filter(Certificate.id == data.certificate_id).first()
-            if certificate_query.rank > max_rank:
-                max_rank = certificate_query.rank
-                result['is_direct'] = data.is_direct
-                result['rank'] = max_rank
-                result['comment'] = certificate_query.comment
+    result = {'is_direct': False, 'rank': 0, 'comment': ''}
+    max_rank = -1
+    for data in query:
+        if data.rank > max_rank:
+            max_rank = data.rank
+            result['is_direct'] = data.is_direct
+            result['rank'] = max_rank
+            result['comment'] = data.comment
                 
-        return result
-        
-    else:
-        return None
+    return result
 
 def get_specialties(db: Session, body: SpecialtySearch):
     if body.military_type == None:

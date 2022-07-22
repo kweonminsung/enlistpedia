@@ -24,9 +24,9 @@ def get_current_applible_data():
     result = []
     pageNo = 1
     while True:
-        params ={'serviceKey' : SERVICE_KEY, 'pageNo' : pageNo, 'numOfRows' : '100' }
+        params ={'serviceKey' : SERVICE_KEY, 'pageNo' : pageNo, 'numOfRows' : 50}
         try:
-            response = requests.get(APPLY_STATUS_INFO_URL, params=params)
+            response = requests.get(APPLY_STATUS_INFO_URL, params=params, timeout = 1)
         except:
             time.sleep(0.1)
             continue
@@ -37,9 +37,10 @@ def get_current_applible_data():
             
             break
         
-        temp_date ='20220701'
+        today = datetime.datetime.today()
+        
         for _data in data:
-            if datetime.datetime.strptime(_data['jeopsuJrdtm'], '%Y%m%d') >  datetime.datetime.today():
+            if datetime.datetime.strptime(_data['jeopsuJrdtm'], '%Y%m%d') > today:
                 result.append(_data['gsteukgiCd'])
         pageNo +=1 
     return result
@@ -164,13 +165,8 @@ def get_else_certificate_score(max_rank: int, is_normal: bool, comment: str):
     score_data = {'article': '자격증/면허', 'description': comment, 'score': 0, 'perfect_score': 50}
     if is_normal: score_data['perfect_score'] = 70
     
-    if max_rank == 9:
-        score_data['score'] = 50
-    elif max_rank == 8:
-        score_data['score'] = 45
-    elif max_rank == 7:
-        score_data['score'] = 40
-    elif max_rank == 5:
+
+    if max_rank == 5:
         score_data['score'] = 50
         if is_normal: score_data['score'] = 70
     elif max_rank == 4:
@@ -240,17 +236,17 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                         certificate_result = get_army_certificate_score(result['rank'],result['is_direct'],result['comment'])
                     else:
                         certificate_result = {'article': '자격증/면허', 'description': '', 'score': 0, 'perfect_score':90}
+                        certificate_result['description'] = result['comment']
                         if result['rank'] == 5:
-                            certificate_result['description'] = '대형/특수'
                             certificate_result['score'] = 90
                             
                         elif result['rank'] == 4:
-                            certificate_result['description'] = '1종보통'
                             certificate_result['score'] = 87
                             
-                        else:
-                            certificate_result['description'] = '2종보통'
+                        elif result['rank'] == 3:
                             certificate_result['score'] = 85
+                        else:
+                            certificate_result['score'] = 0
                         
                 else:
                     certificate_result = {'article': '자격증/면허', 'description': '미소지', 'score': 20, 'perfect_score':50}
@@ -262,7 +258,7 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                 tot_extra_points = 0
                 for points in body.extra_points:
                     if points.specialty_id == -1 or points.specialty_id == data.id:
-                        if (tot_extra_points + points.score) > 15: continue
+                        if (tot_extra_points + points.score) > 15: break
                         else:
                             tot_extra_points += points.score
                         score_data.append({'article':'가산점','description':points.description, 'score':points.score})
@@ -336,17 +332,18 @@ def get_specialties(body: SpecialtySearch, db: Session = Depends(get_db)):
                             
                         score_data.append(certificate_result)
                         my_tot_score += certificate_result['score']
+                
                     # 가산점
                     
                     tot_extra_points = 0
                     for points in body.extra_points:
                         if points.specialty_id == -1 or points.specialty_id == data.id:
                             if (tot_extra_points + points.score) > 15: break
-                            else:
+                            else: 
                                 tot_extra_points += points.score
                             score_data.append({'article':'가산점','description':points.description, 'score':points.score})
                 
-                    my_tot_score += tot_extra_points   
+                    my_tot_score += tot_extra_points  
                     
                     data.my_tot_score = my_tot_score
                     data.score_data = score_data
