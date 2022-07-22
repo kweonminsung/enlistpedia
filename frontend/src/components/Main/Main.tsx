@@ -13,17 +13,19 @@ export default function Main() {
   const [isSearching, setIsSearching] = useState<boolean>(false);
 
   const searchToggle = () => {
-    if (!isSearching)
+    if (!isSearching) {
       window.scrollTo({
-        top: 400,
+        top: 300,
         behavior: 'smooth',
       });
-
-    if (
-      isSearching &&
-      !confirm('창을 닫으면 결과가 사라집니다. 그래도 닫으시겠습니까?')
-    ) {
-      return;
+    } else {
+      if (!confirm('창을 닫으면 결과가 사라집니다. 그래도 닫으시겠습니까?')) {
+        return;
+      }
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
     setIsSearching(!isSearching);
   };
