@@ -1,5 +1,6 @@
 import { css } from '@emotion/css';
 import { useContext } from 'react';
+import { DOMAIN } from '../../constants/endpoints';
 import { ThemeContext } from '../../context/ThemeContext';
 
 export default function Title() {
@@ -24,7 +25,11 @@ export default function Title() {
       <h2
         className={css`
           font-size: 1.5rem;
+          cursor: pointer;
         `}
+        onClick={() => {
+          alert('입대백과');
+        }}
       >
         군 선택도 현명하게
       </h2>
@@ -32,7 +37,11 @@ export default function Title() {
         className={css`
           font-size: 3.5rem;
           margin-top: 0.6rem;
+          cursor: pointer;
         `}
+        onClick={() => {
+          window.open(DOMAIN, '_self');
+        }}
       >
         입대백과
       </h1>

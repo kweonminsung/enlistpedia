@@ -1,13 +1,37 @@
+import { keyframes } from '@emotion/css';
 import styled from '@emotion/styled';
 
 export const MainContainer = styled.div`
   margin: 0 auto;
-  margin-top: 15rem;
   width: 90%;
   max-width: 50rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const bounce = keyframes`
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-15px);
+  }
+`;
+
+export const StartArrowContainer = styled.div<{
+  isDarkMode: boolean;
+  isSearching: boolean;
+}>`
+  margin-top: ${({ isSearching }) => (isSearching ? '5rem' : '12rem')};
+  animation: ${bounce} 3s infinite;
+  > svg {
+    display: ${({ isSearching }) => (isSearching ? 'none' : '')};
+  }
+  transition: all 0.25s linear;
 `;
 
 export const SearchButton = styled.button<{
