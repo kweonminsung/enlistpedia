@@ -38,7 +38,6 @@ export const CounterConatiner = styled.div<{
   p: first-of-type {
     color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
     font-size: 2.5rem;
-    font-weight: 700;
   }
   @media (max-width: 600px) {
     flex-direction: column;

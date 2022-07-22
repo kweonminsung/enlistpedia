@@ -7,15 +7,6 @@
   font-display: fallback;
 }
 
-@font-face {
-  font-family: 'NanumSquare_ac';
-  src: url('../public/fonts/NanumSquare_ac/NanumSquare_acEB.ttf')
-    format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: fallback;
-}
-
 * {
   font-family: 'NanumSquare_ac';
   -webkit-font-smoothing: antialiased;

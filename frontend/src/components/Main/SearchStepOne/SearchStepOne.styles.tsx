@@ -42,7 +42,6 @@ export const OrganizationText = styled.button<{
   selectedOrg: number;
 }>`
   background-color: transparent;
-  font-weight: 700;
   font-size: 1.7rem;
   color: ${({ isDarkMode, orgNumber, selectedOrg }) =>
     orgNumber === selectedOrg
@@ -126,7 +125,6 @@ export const GradeText = styled.button<{
   selectedMajor: Major | null;
 }>`
   background-color: transparent;
-  font-weight: 700;
   font-size: 1rem;
   color: ${({ isDarkMode, grade, selectedGrade, selectedMajor }) =>
     selectedMajor
@@ -148,7 +146,6 @@ export const AttendText = styled.button<{
   selectedMajor: Major | null;
 }>`
   background-color: transparent;
-  font-weight: 700;
   font-size: 1rem;
   color: ${({ isDarkMode, attend, selectedAttend, selectedMajor }) =>
     selectedMajor
