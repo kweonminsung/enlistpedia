@@ -59,8 +59,6 @@ class Certificate(Base):
     
     id = Column(Integer, primary_key=True, index=True, autoincrement=True, unique=True)
     name = Column(String, nullable=False)
-    rank = Column(Integer, nullable=False)
-    comment = Column(String, nullable=False)
 
     specialties = relationship(
         'SpecialtyCertificate', back_populates='certificates', cascade="all, delete")
@@ -88,6 +86,8 @@ class SpecialtyCertificate(Base):
     specialty_id = Column(Integer, ForeignKey("specialty.id"), nullable=False)
     certificate_id = Column(Integer, ForeignKey("certificate.id"), nullable=False)
     is_direct =  Column(Boolean, nullable=False)
+    rank = Column(Integer, nullable=False)
+    comment = Column(String, nullable=False)
 
     specialties = relationship(
         'Specialty',  back_populates='certificates')
