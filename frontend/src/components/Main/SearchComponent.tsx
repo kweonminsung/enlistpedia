@@ -49,7 +49,7 @@ export default function SearchComponent() {
 
   const scrollToTop = () => {
     window.scrollTo({
-      top: 400,
+      top: 300,
       behavior: 'smooth',
     });
   };
