@@ -90,12 +90,13 @@ export default function SearchStepOne({
     const majorRecommendDiv = majorRecommendRef.current;
     const inputElement: HTMLInputElement = e.target as HTMLInputElement;
 
-    majorRecommendDiv.innerHTML = '';
     if (inputElement.value === '') return;
 
     const majorList = await (
       await axios.get(`/majors?match=${inputElement.value}`)
     ).data;
+
+    majorRecommendDiv.innerHTML = '';
 
     majorList.forEach(function (
       recommend: Major,
@@ -123,12 +124,13 @@ export default function SearchStepOne({
     const certificateRecommendDiv = certificateRecommendRef.current;
     const inputElement: HTMLInputElement = e.target as HTMLInputElement;
 
-    certificateRecommendDiv.innerHTML = '';
     if (inputElement.value === '') return;
 
     const certificateList = await (
       await axios.get(`/certificates?match=${inputElement.value}`)
     ).data;
+
+    certificateRecommendDiv.innerHTML = '';
 
     certificateList.forEach(function (
       recommend: Certificate,
