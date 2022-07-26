@@ -13,7 +13,7 @@ else
     . venv/Scripts/activate
 fi
 
-nohup uvicorn main:app --reload --port 3001 > ../logs/backend_log_$(date +%s).txt 2>&1 &
+nohup uvicorn main:app --reload --port 8000 > ../logs/backend_log_$(date +%s).txt 2>&1 &
 cd ../frontend
 
 if ! [ -d "node_modules" ]; then

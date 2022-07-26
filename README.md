@@ -49,13 +49,13 @@ $ pip install -r requirements.txt
 ### Start Development Server
 
 ```bash
-$ uvicorn main:app --reload --port 3001
+$ uvicorn main:app --reload --port 8000
 ```
 
 ### Start Production Server
 
 ```bash
-$ uvicorn main:app -reload --host 0.0.0.0 --port 3001
+$ uvicorn main:app -reload --host 0.0.0.0 --port 8000
 ```
 
 ## Documentation
