@@ -260,48 +260,60 @@ export default function SearchStepOne({
           <GradeText
             isDarkMode={isDarkMode}
             onClick={() => {
+              if (selectedMajor === null) {
+                alert('전공을 먼저 입력해주세요.');
+                return;
+              }
               setSelectedGrade(1);
             }}
             grade={1}
             selectedGrade={selectedGrade}
             selectedMajor={selectedMajor}
-            disabled={selectedMajor === null}
           >
             1학년
           </GradeText>
           <GradeText
             isDarkMode={isDarkMode}
             onClick={() => {
+              if (selectedMajor === null) {
+                alert('전공을 먼저 입력해주세요.');
+                return;
+              }
               setSelectedGrade(2);
             }}
             grade={2}
             selectedGrade={selectedGrade}
             selectedMajor={selectedMajor}
-            disabled={selectedMajor === null}
           >
             2학년
           </GradeText>
           <GradeText
             isDarkMode={isDarkMode}
             onClick={() => {
+              if (selectedMajor === null) {
+                alert('전공을 먼저 입력해주세요.');
+                return;
+              }
               setSelectedGrade(3);
             }}
             grade={3}
             selectedGrade={selectedGrade}
             selectedMajor={selectedMajor}
-            disabled={selectedMajor === null}
           >
             3학년
           </GradeText>
           <GradeText
             isDarkMode={isDarkMode}
             onClick={() => {
+              if (selectedMajor === null) {
+                alert('전공을 먼저 입력해주세요.');
+                return;
+              }
               setSelectedGrade(4);
             }}
             grade={4}
             selectedGrade={selectedGrade}
             selectedMajor={selectedMajor}
-            disabled={selectedMajor === null}
           >
             4학년
           </GradeText>
@@ -310,24 +322,30 @@ export default function SearchStepOne({
           <AttendText
             isDarkMode={isDarkMode}
             onClick={() => {
+              if (selectedMajor === null) {
+                alert('전공을 먼저 입력해주세요.');
+                return;
+              }
               setSelectedAttend(0);
             }}
             attend={0}
             selectedAttend={selectedAttend}
             selectedMajor={selectedMajor}
-            disabled={selectedMajor === null}
           >
             재학
           </AttendText>
           <AttendText
             isDarkMode={isDarkMode}
             onClick={() => {
+              if (selectedMajor === null) {
+                alert('전공을 먼저 입력해주세요.');
+                return;
+              }
               setSelectedAttend(1);
             }}
             attend={1}
             selectedAttend={selectedAttend}
             selectedMajor={selectedMajor}
-            disabled={selectedMajor === null}
           >
             수료
           </AttendText>
