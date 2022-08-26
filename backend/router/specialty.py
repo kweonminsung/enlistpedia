@@ -26,7 +26,7 @@ def get_current_applible_data():
     while True:
         params ={'serviceKey' : SERVICE_KEY, 'pageNo' : pageNo, 'numOfRows' : 50}
         try:
-            response = requests.get(APPLY_STATUS_INFO_URL, params=params, timeout = 1)
+            response = requests.get(APPLY_STATUS_INFO_URL, params=params, timeout = 0.7)
         except:
             time.sleep(0.1)
             continue
@@ -40,7 +40,7 @@ def get_current_applible_data():
         today = datetime.datetime.today()
         
         for _data in data:
-            if datetime.datetime.strptime(_data['jeopsuJrdtm'], '%Y%m%d') > today:
+            if datetime.datetime.strptime(_data['jeopsuSjdtm'], '%Y%m%d') <= today and today <= datetime.datetime.strptime(_data['jeopsuJrdtm'], '%Y%m%d'):
                 result.append(_data['gsteukgiCd'])
         pageNo +=1 
     return result
