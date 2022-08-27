@@ -110,7 +110,7 @@ export default function SiteInfo() {
               round={true}
             />
           </a>
-          <a href="https://github.com/Just4Study" target="_blank">
+          <a href="https://github.com/R3gardless" target="_blank">
             <IconImage
               url="https://avatars.githubusercontent.com/u/48237469"
               round={true}
