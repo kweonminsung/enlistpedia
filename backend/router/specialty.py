@@ -24,9 +24,9 @@ def get_current_applible_data():
     result = []
     pageNo = 1
     while True:
-        params ={'serviceKey' : SERVICE_KEY, 'pageNo' : pageNo, 'numOfRows' : 50}
+        params ={'serviceKey' : SERVICE_KEY, 'pageNo' : pageNo, 'numOfRows' : 200}
         try:
-            response = requests.get(APPLY_STATUS_INFO_URL, params=params, timeout = 0.7)
+            response = requests.get(APPLY_STATUS_INFO_URL, params=params, timeout = 0.5)
         except:
             time.sleep(0.1)
             continue
