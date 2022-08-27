@@ -1,5 +1,5 @@
 import { css } from '@emotion/css';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { ScoreData, Specialty } from '../../../typings/typings';
 import Chart from 'react-apexcharts';
 import {
@@ -205,6 +205,9 @@ export function Accordion({ isDarkMode, specialty }: Props) {
                   className={css`
                     margin: 0 auto;
                     width: 80%;
+                    @media (max-width: 600px) {
+                      width: 100%;
+                    }
                   `}
                   options={{
                     chart: {

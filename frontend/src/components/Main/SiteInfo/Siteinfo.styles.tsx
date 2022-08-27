@@ -18,8 +18,6 @@ export const IntoText = styled.div<{
   margin-top: 8rem;
   text-align: center;
   color: ${({ isDarkMode }) => (!isDarkMode ? '#000000' : '#FFFFFF')};
-  > p {
-  }
   > h2 {
     > span {
       color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
@@ -34,6 +32,9 @@ export const CarouselContainer = styled.div`
   aspect-ratio: 5 / 3;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   overflow: hidden;
+  @media (max-width: 600px) {
+    width: 90%;
+  }
   > div {
     transition: all 0.5s ease-in-out;
     display: flex;

@@ -40,16 +40,6 @@ export default function SiteInfo() {
     'images/intro3.png',
   ];
 
-  const goToPrevCard = () => {
-    if (carouselRef.current === null) {
-      return;
-    }
-    cardIndex = (cardIndex === 0 ? CARDIMAGES.length : cardIndex) - 1;
-    carouselRef.current.style.transform = `translate3d(-${
-      carouselRef.current.clientHeight * (5 / 3) * cardIndex
-    }px, 0, 0)`;
-  };
-
   const goToNextCard = () => {
     if (carouselRef.current === null) {
       return;

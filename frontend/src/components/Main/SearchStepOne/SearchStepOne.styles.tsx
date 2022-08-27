@@ -8,6 +8,9 @@ export const SearchStepContainer = styled.div<{
   text-align: center;
   color: ${({ isDarkMode }) => (!isDarkMode ? '#7E8D6D' : '#ADCE8A')};
   font-size: 1.2rem;
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
   > p {
     margin-top: 2.5rem;
   }
@@ -26,6 +29,13 @@ export const SearchStepInput = styled.div<{ isDarkMode: boolean }>`
   background-color: ${({ isDarkMode }) =>
     !isDarkMode ? '#FFFFFF' : '#3D3D3D'};
   transition: all 0.25s linear;
+  overflow: hidden;
+  @media (max-width: 600px) {
+    input {
+      width: 10rem !important;
+      font-size: 0.8rem !important;
+    }
+  }
 `;
 
 export const SelectOrganization = styled(SearchStepInput)<{
@@ -52,6 +62,9 @@ export const OrganizationText = styled.button<{
       ? '#000000'
       : '#FFFFFF'};
   transition: all 0.25s linear;
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
   p {
     margin: 0;
     font-size: 0.8rem;
@@ -91,6 +104,11 @@ export const RecommendContainer = styled.div<{
     rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
     rgba(0, 0, 0, 0.09) 0px 32px 16px;
   z-index: 10;
+  @media (max-width: 600px) {
+    left: calc(50% - 6rem);
+    width: 12rem;
+    font-size: 0.8rem;
+  }
   p {
     font-size: 0.8rem;
     cursor: pointer;
@@ -116,6 +134,12 @@ export const GradeContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 1.5rem;
+  @media (max-width: 600px) {
+    gap: 1rem;
+    button {
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 export const GradeText = styled.button<{
@@ -166,7 +190,6 @@ export const CertificateInput = styled(SearchStepInput)<{
   width: 90%;
   margin: 0 auto;
   padding: 1rem 0 0 0;
-  overflow: hidden;
   > input {
     position: relative;
     left: 0.5rem;

@@ -6,7 +6,6 @@ import { SearchButton } from './Main.styles';
 import SearchComponent from './SearchComponent';
 import SiteInfo from './SiteInfo/SiteInfo';
 import Footer from '../Footer/Footer';
-import { css } from '@emotion/css';
 
 export default function Main() {
   const { isDarkMode } = useContext(ThemeContext);

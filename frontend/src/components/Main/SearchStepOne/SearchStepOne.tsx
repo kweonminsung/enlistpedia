@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, {
   HTMLAttributes,
   useContext,
-  useEffect,
   useReducer,
   useRef,
   useState,
