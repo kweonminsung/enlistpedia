@@ -1,18 +1,22 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
 
 import os
-import json
 
+print(f'==== Running as {"development" if not os.environ.get("APP_ENV") else "production"} ====')
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CONFIG_FILE = os.path.join(BASE_DIR, '../config.json')
-configs=json.loads(open(CONFIG_FILE).read())
+if os.environ.get("APP_ENV") != "production":
+    load_dotenv()
 
-DB = configs["DB"]["production"]
+DB_USERNAME = os.environ.get("DB_USERNAME")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+DB_HOST = os.environ.get("DB_HOST")
+DB_PORT = os.environ.get("DB_PORT")
+DB_DATABASE = os.environ.get("DB_DATABASE")
 
-SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB['user']}:{DB['password']}@{DB['host']}:{DB['port']}/{DB['database']}"
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

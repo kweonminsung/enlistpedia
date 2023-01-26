@@ -1,4 +1,9 @@
-export const SERVER_URL: string = 'https://enlistpedia.org/api';
-// export const SERVER_URL: string = 'http://localhost:8000';
+export const SERVER_URL =
+  process.env.REACT_APP_NODE_ENV === 'production'
+    ? 'https://api.enlistpedia.org'
+    : 'http://localhost:8000';
 
-export const DOMAIN: string = 'http://enlistpedia.org';
+export const DOMAIN =
+  process.env.REACT_APP_NODE_ENV === 'production'
+    ? 'https://enlistpedia.org'
+    : 'http://localhost:3000';

@@ -7,7 +7,6 @@ from db.database import engine
 
 app = FastAPI()
 
-
 # 데이터베이스 생성
 models.Base.metadata.create_all(bind=engine)
 
