@@ -1,4 +1,4 @@
 backend/venv
 backend/__pycache__
 logs/
-docker-compose.yml
+docker-compose.yaml
