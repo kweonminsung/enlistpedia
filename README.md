@@ -84,13 +84,13 @@
 
 <br/>
 
-## 🖥 프로젝트 아키텍쳐
+## 🖥 서비스 아키텍쳐
 
 <img src="https://user-images.githubusercontent.com/48237469/216937921-58419993-fc5b-43cc-bf97-fbd29acadb93.png">
 
 <br/>
 
-## 📢 실행 방법!
+## 📢 실행 방법
 
 ### 요구 사항
 
